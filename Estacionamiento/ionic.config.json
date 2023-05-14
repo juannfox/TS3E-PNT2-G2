@@ -1,0 +1,7 @@
+{
+  "name": "estacionamiento",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "vue-vite"
+}
