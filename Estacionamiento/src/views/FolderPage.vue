@@ -24,7 +24,7 @@
   </ion-page>
 </template>
 
-<script setup lang="ts">
+<script setup lang="js">
 import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar } from '@ionic/vue';
 </script>
 

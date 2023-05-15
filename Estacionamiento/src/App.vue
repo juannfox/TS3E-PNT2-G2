@@ -30,7 +30,7 @@
   </ion-app>
 </template>
 
-<script setup lang="ts">
+<script setup lang="js">
 import {
   IonApp,
   IonContent,
