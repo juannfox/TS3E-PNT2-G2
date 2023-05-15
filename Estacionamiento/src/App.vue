@@ -90,7 +90,7 @@ const appPages = [
     mdIcon: archiveSharp,
   },
   {
-    title: 'Trash',
+    title: 'FrontEnd',
     url: '/folder/Trash',
     iosIcon: trashOutline,
     mdIcon: trashSharp,
