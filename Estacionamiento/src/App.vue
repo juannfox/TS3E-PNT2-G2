@@ -1,11 +1,13 @@
-<template>
+<!--<template>
   <ion-app>
     <ion-split-pane content-id="main-content">
       <ion-menu content-id="main-content" type="overlay">
         <ion-content>
           <ion-list id="inbox-list">
             <ion-list-header>Inbox</ion-list-header>
-            <ion-note>hi@ionicframework.com</ion-note>
+            <ion-button v-if="! isLogin" v-on:click="this.$router.push('/login')">Login</ion-button>
+            <ion-button v-if="isLogin" v-on:click="toggleLogin">Logout</ion-button>
+            <ion-note v-if="isLogin">hi@ionicframework.com</ion-note>
 
             <ion-menu-toggle :auto-hide="false" v-for="(p, i) in appPages" :key="i">
               <ion-item @click="selectedIndex = i" router-direction="root" :router-link="p.url" lines="none" :detail="false" class="hydrated" :class="{ selected: selectedIndex === i }">
@@ -28,6 +30,36 @@
       <ion-router-outlet id="main-content"></ion-router-outlet>
     </ion-split-pane>
   </ion-app>
+</template>-->
+
+<template>
+  <ion-app>
+    <ion-menu :type="menuType" content-id="main-content">
+      <ion-header>
+        <ion-menu-toggle>
+          <ion-button>Contraer</ion-button>
+        </ion-menu-toggle>
+      </ion-header>
+      <ion-content class="ion-padding">
+        
+        <ion-button v-if="! isLogin" v-on:click="this.$router.push('/login')">Login</ion-button>
+        <ion-button v-if="isLogin" v-on:click="toggleLogin">Logout</ion-button>
+        <ion-note v-if="isLogin">{{ usuario }}</ion-note>
+      </ion-content>
+    </ion-menu>
+
+
+    <ion-header>
+      <ion-toolbar>
+        <ion-menu-toggle>
+        <ion-button>Menú</ion-button>
+      </ion-menu-toggle>
+      </ion-toolbar>
+    </ion-header>
+    
+    <ion-router-outlet id="main-content"></ion-router-outlet>
+
+  </ion-app>
 </template>
 
 <script setup lang="js">
@@ -41,11 +73,12 @@ import {
   IonListHeader,
   IonMenu,
   IonMenuToggle,
+  IonButton,
   IonNote,
   IonRouterOutlet,
   IonSplitPane,
 } from '@ionic/vue';
-import { ref } from 'vue';
+import { ref, defineComponent } from 'vue';
 import {
   archiveOutline,
   archiveSharp,
@@ -62,6 +95,12 @@ import {
   warningOutline,
   warningSharp,
 } from 'ionicons/icons';
+import { storeToRefs } from 'pinia';
+import { useLoginStore } from '@/login.js';
+
+const store = useLoginStore();
+const { isLogin, usuario } = storeToRefs(store);
+const { toggleLogin } = store;
 
 const selectedIndex = ref(0);
 const appPages = [
