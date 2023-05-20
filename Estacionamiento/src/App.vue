@@ -37,28 +37,49 @@
     <ion-menu :type="menuType" content-id="main-content">
       <ion-header>
         <ion-menu-toggle>
-          <ion-button>Contraer</ion-button>
+          <ion-button fill="outline">Contraer</ion-button>
         </ion-menu-toggle>
       </ion-header>
       <ion-content class="ion-padding">
-        
-        <ion-button v-if="! isLogin" v-on:click="this.$router.push('/login')">Login</ion-button>
-        <ion-button v-if="isLogin" v-on:click="toggleLogin">Logout</ion-button>
-        <ion-note v-if="isLogin">{{ usuario }}</ion-note>
+        <ion-icon :icon="warning"></ion-icon>
+        <ion-text v-if="isLogin" color="secondary">
+          <h1>{{ usuario }}</h1>
+        </ion-text>
+
+        <ion-button v-if="!isLogin" v-on:click="this.$router.push('/login')"
+          >Login</ion-button
+        >
+        <ion-button
+          fill="clear"
+          v-if="isLogin"
+          @click="this.$router.push('/mapa')"
+          >Mapa de estacionamientos</ion-button
+        >
+        <ion-button
+          fill="clear"
+          v-if="isLogin"
+          @click="this.$router.push('/miestacionamiento')"
+          >Mi estacionamiento</ion-button
+        >
+        <ion-button
+          fill="clear"
+          color="danger"
+          v-if="isLogin"
+          v-on:click="toggleLogin"
+          >Logout</ion-button
+        >
       </ion-content>
     </ion-menu>
-
 
     <ion-header>
       <ion-toolbar>
         <ion-menu-toggle>
-        <ion-button>Menú</ion-button>
-      </ion-menu-toggle>
+          <ion-button>Menú</ion-button>
+        </ion-menu-toggle>
       </ion-toolbar>
     </ion-header>
-    
-    <ion-router-outlet id="main-content"></ion-router-outlet>
 
+    <ion-router-outlet id="main-content"></ion-router-outlet>
   </ion-app>
 </template>
 
@@ -77,6 +98,7 @@ import {
   IonNote,
   IonRouterOutlet,
   IonSplitPane,
+  IonText
 } from '@ionic/vue';
 import { ref, defineComponent } from 'vue';
 import {
@@ -141,6 +163,7 @@ const appPages = [
     mdIcon: warningSharp,
   },
 ];
+
 const labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
 
 const path = window.location.pathname.split('folder/')[1];

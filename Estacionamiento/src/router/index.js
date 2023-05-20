@@ -3,12 +3,21 @@ import { createRouter, createWebHistory } from '@ionic/vue-router';
 const routes = [
   {
     path: '/',
-    component: () => import ('@/views/Index.vue')
+    component: () => import('@/views/Index.vue')
   },
   {
     path: '/login',
-    component: () => import ('@/views/Login.vue')
+    component: () => import('@/views/Login.vue')
+  },
+  {
+    path: '/mapa',
+    component: () => import('@/views/MapaView.vue')
+  },
+  {
+    path: '/miestacionamiento',
+    component: () => import('@/views/DetallesEstacionamiento.vue')
   }
+
 ]
 
 const router = createRouter({
