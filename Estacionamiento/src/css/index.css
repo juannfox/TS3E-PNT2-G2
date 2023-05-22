@@ -1,0 +1,15 @@
+.background {
+    position: relative;
+    text-align: center;
+  }
+
+.title {
+    position: absolute;
+    top: 5%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+.bgimage{
+    width: 100%;
+  }

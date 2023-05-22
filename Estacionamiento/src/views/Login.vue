@@ -25,16 +25,6 @@
   </ion-page>
 </template>
 
-<!--
-<template>
-  <ion-page>
-    <ion-input type="email" label="Email" v-model="usuario.email" style="margin-top:100px;"></ion-input>
-    <ion-input type="password" label="Contraseña" v-model="usuario.password"></ion-input>
-    <ion-button v-on:click="loguear(usuario)">Login</ion-button>
-  </ion-page>
-</template>
--->
-
 <script setup lang="js">
 import {
   IonContent,

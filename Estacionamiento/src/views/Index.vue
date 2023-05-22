@@ -1,10 +1,9 @@
 <template>
   <ion-page>
-    <h2 style="margin-top:100px;position: relative;text-align: center;color: white;">Garage Responsive</h2>
-    <ion-img
-      src="src/img/exterior.jpg"
-      alt="Parkinglot.app"
-    ></ion-img>
+    <div class="background">
+      <h2 class="title">Garage Responsive</h2>
+      <ion-img class="bgimage" src="src/img/exterior.jpg" alt="Parkinglot.app"></ion-img>
+    </div>
   </ion-page>
 </template>
 
@@ -15,6 +14,8 @@ import {
   IonInput
 } from '@ionic/vue';
 import { ref } from 'vue';
+
+import '@/css/index.css';
 
 import { storeToRefs } from 'pinia';
 import { useLoginStore } from '@/login.js';
