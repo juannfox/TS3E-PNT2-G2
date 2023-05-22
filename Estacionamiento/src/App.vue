@@ -60,24 +60,16 @@ import {
   IonApp,
   IonContent,
   IonIcon,
-  IonItem,
-  IonLabel,
-  IonList,
-  IonListHeader,
   IonMenu,
   IonMenuToggle,
   IonButton,
-  IonNote,
   IonRouterOutlet,
-  IonSplitPane,
   IonText
 } from '@ionic/vue';
 import { ref, defineComponent } from 'vue';
 import {
   archiveOutline,
   archiveSharp,
-  bookmarkOutline,
-  bookmarkSharp,
   heartOutline,
   heartSharp,
   mailOutline,
