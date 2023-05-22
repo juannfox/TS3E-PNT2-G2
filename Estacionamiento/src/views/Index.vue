@@ -1,6 +1,10 @@
 <template>
   <ion-page>
-    <h2 style="margin-top:100px;">Garage Responsive</h2>
+    <h2 style="margin-top:100px;position: relative;text-align: center;color: white;">Garage Responsive</h2>
+    <ion-img
+      src="src/img/exterior.jpg"
+      alt="Parkinglot.app"
+    ></ion-img>
   </ion-page>
 </template>
 
