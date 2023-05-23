@@ -14,19 +14,18 @@ export const useLoginStore = defineStore('login', {
         if (this.isLogin){
             this.isLogin = false
         }else{
-            const response = await axios.get(`${url_base}`);
-            if (response.status == 200){
+            try{
+              const response = await axios.get(`${url_base}`);
               const usuario_backend = response.data.filter(usr => usr.email === usuario.email);
-              console.log(usuario_backend);
               if (usuario.password === usuario_backend[0].password){
                   this.isLogin = true
                   this.usuario = usuario.email
                   console.log("Bienvenido.")
               }else{
-                  console.log("ERROR: Login rechazado por la NASA.")
+                console.log("ERROR: Login rechazado por la NASA.")
               }
-            }else{
-              console.log("ERROR: No se pudo iniciar sesion por errores de BE.")
+            } catch (e){
+              alert(`ERROR: ${e}`);
             }
         }
     }

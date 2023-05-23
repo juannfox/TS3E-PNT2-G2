@@ -5,9 +5,11 @@
 
 .title {
     position: absolute;
-    top: 5%;
+    top: 40%;
     left: 50%;
     transform: translate(-50%, -50%);
+    font-size: 75px;
+    color: #e9e6e9
   }
 
 .bgimage{
