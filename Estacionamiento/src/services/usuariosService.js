@@ -15,5 +15,14 @@ export default {
     } catch(e){
       alert(`${e}`)
     }
+  },
+  async obtenerUsuario(email){
+    try{
+      const response = await apiClient.get();
+      usuario = response.data.filter(usr => usr.email === email);
+      return usuario;
+    } catch(e){
+      alert(`${e}`)
+    }
   }
 }

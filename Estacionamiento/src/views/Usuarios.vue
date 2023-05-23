@@ -6,7 +6,13 @@
         <h2>Usuarios</h2>
         <ion-button @click="volverAlHome">Volver al home</ion-button>
         <ion-button @click="cargarUsuarios">Mostrar lista</ion-button>
+        <ion-input v-model="usuario"></ion-input>
+        <ion-button @click="cargarUsuario(usuario)">Buscar</ion-button>
         <div v-if="true">
+          <ion-toast>{{ usuario }}</ion-toast>
+
+        </div>
+        <div v-if="usuarios.length > 0">
           <ion-list v-bind:key="usr" v-for="usr in usuarios">
             <ion-item>
               <ion-label>{{ usr.email  }}</ion-label>
@@ -38,8 +44,8 @@ export default {
         alert(e)
       }
     },
-    ordenarLista() {
-      this.lista.sort( (a,b) => a.id - b.id  )
+    async cargarUsuario(email) {
+      this.usuario = await listaService.obtenerUsuario(email)
     },
     async cargarUsuarios() {
       try {
@@ -70,6 +76,7 @@ export default {
   },
   data() {
     return {
+      usuario: null,
       usuarios: [],
       elemento: {},
       ocultar: true

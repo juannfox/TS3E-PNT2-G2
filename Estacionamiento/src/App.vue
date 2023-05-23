@@ -9,7 +9,7 @@
       <ion-content class="ion-padding">
         <ion-icon :icon="warning"></ion-icon>
         <ion-text v-if="isLogin" color="secondary">
-          <h1>{{ usuario }}</h1>
+          <h1>{{ usuarioLogueado }}</h1>
         </ion-text>
 
         <ion-button v-if="!isLogin" v-on:click="this.$router.push('/login')"
@@ -85,7 +85,7 @@ import { storeToRefs } from 'pinia';
 import { useLoginStore } from '@/login.js';
 
 const store = useLoginStore();
-const { isLogin, usuario } = storeToRefs(store);
+const { isLogin, usuarioLogueado } = storeToRefs(store);
 const { toggleLogin } = store;
 
 const selectedIndex = ref(0);

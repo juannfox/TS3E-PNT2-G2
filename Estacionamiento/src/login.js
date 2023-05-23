@@ -5,7 +5,7 @@ export const useLoginStore = defineStore('login', {
   state: () => {
     return {
         isLogin: false,
-        usuario: null
+        usuarioLogueado: null
     }
   },
   actions: {
@@ -16,11 +16,10 @@ export const useLoginStore = defineStore('login', {
         }else{
             try{
               const response = await axios.get(`${url_base}`);
-              const usuario_backend = response.data.filter(usr => usr.email === usuario.email);
-              if (usuario.password === usuario_backend[0].password){
+              const usuario_backend = response.data.find(usr => usr.email === usuario.email);
+              if (usuario.password === usuario_backend.password){
                   this.isLogin = true
-                  this.usuario = usuario.email
-                  console.log("Bienvenido.")
+                  this.usuarioLogueado = usuario_backend.name
               }else{
                 console.log("ERROR: Login rechazado por la NASA.")
               }
