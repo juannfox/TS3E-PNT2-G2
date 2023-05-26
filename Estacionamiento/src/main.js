@@ -2,6 +2,7 @@ import { createApp } from 'vue'
 import App from '@/App.vue'
 import router from '@/router';
 import { createPinia } from 'pinia'
+import piniaPluginPersistedState from "pinia-plugin-persistedstate"
 import { IonicVue } from '@ionic/vue';
 import {axiosPlugin} from '@/plugins/axiosPlugin.js'
 
@@ -34,6 +35,9 @@ const axiosOptions = {
 //Pinia state store (persistencia entre vistas)
 //Los stores se configuran luego, esto es solo el plugin
 const pinia = createPinia()
+//Plugin para opcionalmente persistir pinia a disco
+//https://github.com/prazdevs/pinia-plugin-persistedstate
+pinia.use(piniaPluginPersistedState)
 
 /*Objeto app global de VUE (disponible como 'this' en
 todos los componentes). Los objetos enviados con el

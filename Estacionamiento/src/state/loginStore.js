@@ -27,7 +27,10 @@ https://pinia.vuejs.org/core-concepts
 */
 const piniaOptions = {
   state: () => {return stateObject},
-  actions: actionsObject
+  actions: actionsObject,
+  persist: {
+    storage: sessionStorage
+  },
 }
 
 //Store

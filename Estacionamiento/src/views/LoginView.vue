@@ -23,7 +23,7 @@
       </form>
       <div v-if="loggedIn">
         <ion-text>
-          <h1>Usted ya se encuentra loggueado: {{ loggedUser.email }}.</h1>
+          <h2>H1: Sesión iniciada: {{ loggedUser.email }}.</h2>
         </ion-text>
         <ion-button v-on:click="desloguear">Cerrar sesión</ion-button>
         <ion-button v-on:click="this.$router.push('/')">Volver a Inicio</ion-button>
@@ -56,15 +56,12 @@ const loginStore = useLoginStore();
 //Extraer atributos de forma reactiva
 //Dentro de <script setup> utilizar 'this' para accederlos
 //Fuera (template) no hace falta.
-let { loggedIn, loggedUser } = storeToRefs(loginStore);
+const { loggedIn, loggedUser } = storeToRefs(loginStore);
 //Extraer metodos de forma destructurativa
 const { login, logout, guardarUsuario } = loginStore;
 
 //Placeholder
-const usuarioInput = {
-  email: "",
-  password: ""
-};
+const usuarioInput = {email: "", password: ""};
 
 async function loginUsuario(solicitante){
     try{
