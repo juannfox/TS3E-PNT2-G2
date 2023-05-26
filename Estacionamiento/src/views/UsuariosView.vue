@@ -4,18 +4,18 @@
   <ion-page>
       <ion-content>
         <h2>Usuarios</h2>
-        <ion-button @click="volverAlHome">Volver al home</ion-button>
-        <ion-button @click="cargarUsuarios">Mostrar lista</ion-button>
-        <ion-input v-model="usuario"></ion-input>
-        <ion-button @click="cargarUsuario(usuario)">Buscar</ion-button>
-        <div v-if="true">
-          <ion-toast>{{ usuario }}</ion-toast>
-
+        <div v-if="! usuarios.length > 0">
+          <ion-input placeholder="Ingrese email" v-model="email"></ion-input>
+          <ion-button @click="cargarUsuario(email)">Buscar</ion-button>
+        </div>
+        <ion-button @click="cargarUsuarios">Mostrar todos</ion-button>
+        <div>
+          <ion-toast>{{ usuario.nombre }}</ion-toast>
         </div>
         <div v-if="usuarios.length > 0">
-          <ion-list v-bind:key="usr" v-for="usr in usuarios">
+          <ion-list v-bind:key="usuario" v-for="usuario in usuarios">
             <ion-item>
-              <ion-label>{{ usr.email  }}</ion-label>
+              <ion-label>{{ usuario.email }}</ion-label>
             </ion-item>
           </ion-list>
         </div>
@@ -24,15 +24,21 @@
 </template>
 
 <script>
-import { IonButton, IonPage, IonContent, IonList } from "@ionic/vue";
-import usuariosService from "@/services/usuariosService";
+import { ref, defineComponent } from 'vue';
+import { IonButton,
+  IonPage,
+  IonContent,
+  IonList,
+  IonInput,
+  IonToast,
+  IonLabel,
+  IonItem
+} from "@ionic/vue";
+import { obtenerUsuario, obtenerUsuarios } from "@/services/usuariosService";
 
 export default {
-  components: {IonPage, IonButton, IonContent, IonList},
+  components: {IonPage, IonButton, IonContent, IonList, IonInput, IonToast, IonLabel, IonItem},
   methods: {
-    iraHome() {
-      this.$router.push("/")
-    },
     async agregaraLista() {
       // Falta control de ingreso de datos
       try {
@@ -45,12 +51,11 @@ export default {
       }
     },
     async cargarUsuario(email) {
-      this.usuario = await usuariosService.obtenerUsuario(email)
-      console.log(this.usuario)
+      this.usuario = await obtenerUsuario(email)
     },
     async cargarUsuarios() {
       try {
-        const respuesta = await usuariosService.obtenerUsuarios()
+        const respuesta = await obtenerUsuarios()
         this.usuarios = respuesta
       } catch(e) {
         alert(e)
@@ -58,7 +63,7 @@ export default {
     },
     async eliminar(id) {
       try {
-        await usuariosService.eliminar(id)
+        await eliminar(id)
         await this.cargarLista()
       } catch( e) {
         alert('Se produjo un error')
@@ -67,7 +72,7 @@ export default {
     async modificar(id) {
       try {
         const elemento = {...this.elemento}
-        await usuariosService.modificar(id,elemento)
+        await modificar(id,elemento)
         await this.cargarLista()
         this.elemento = {}
       } catch( e) {
@@ -77,6 +82,7 @@ export default {
   },
   data() {
     return {
+      email: '',
       usuario: null,
       usuarios: [],
       elemento: {},

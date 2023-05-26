@@ -26,6 +26,14 @@
           @click="this.$router.push('/miestacionamiento')"
           >Mi estacionamiento</ion-button
         >
+
+        <ion-button
+          fill="clear"
+          v-if="loggedIn"
+          @click="this.$router.push('/usuarios')"
+          >Listado de usuarios</ion-button
+        >
+
         <ion-button
           fill="clear"
           color="danger"
@@ -41,6 +49,9 @@
         <ion-menu-toggle>
           <ion-button>Menú</ion-button>
         </ion-menu-toggle>
+        <ion-button  v-on:click="this.$router.push('/')">
+          <ion-icon :icon="homeOutline"></ion-icon>
+        </ion-button>
       </ion-toolbar>
     </ion-header>
 
@@ -72,9 +83,11 @@ import {
   IonMenuToggle,
   IonButton,
   IonRouterOutlet,
-  IonText
+  IonText,
+  IonIcon
 } from '@ionic/vue';
 import {
+  homeOutline,
   archiveOutline,
   archiveSharp,
   heartOutline,

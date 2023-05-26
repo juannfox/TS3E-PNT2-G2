@@ -26,7 +26,6 @@
           <h2>H1: Sesión iniciada: {{ loggedUser.email }}.</h2>
         </ion-text>
         <ion-button v-on:click="desloguear">Cerrar sesión</ion-button>
-        <ion-button v-on:click="this.$router.push('/')">Volver a Inicio</ion-button>
       </div>
     </ion-content>
 
@@ -44,6 +43,7 @@ import {
   IonToolbar,
   IonItem,
   IonText,
+  IonAlert
 } from '@ionic/vue';
 import { obtenerUsuario } from '@/services/usuariosService.js';
 import { storeToRefs } from 'pinia';

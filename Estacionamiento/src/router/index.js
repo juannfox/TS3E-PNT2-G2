@@ -5,6 +5,9 @@ const routes = [
     path: '/',
     component: () => import('@/views/Index.vue')
   },
+  { path: '/home',
+    redirect: '/'
+  },
   {
     path: '/login',
     component: () => import('@/views/LoginView.vue')
