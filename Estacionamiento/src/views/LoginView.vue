@@ -22,8 +22,8 @@
         <ion-button v-on:click="loguear(usuarioInput)">Login</ion-button>
       </form>
       <div v-if="loggedIn">
-        <ion-text color="primary">
-        <h1>Usted ya se encuentra loggueado: {{ loggedUser.email }}.</h1>
+        <ion-text>
+          <h1>Usted ya se encuentra loggueado: {{ loggedUser.email }}.</h1>
         </ion-text>
         <ion-button v-on:click="desloguear">Cerrar sesión</ion-button>
         <ion-button v-on:click="this.$router.push('/')">Volver a Inicio</ion-button>
@@ -54,7 +54,9 @@ const router = useRouter()
 //Instanciar store con su funcion instructiva
 const loginStore = useLoginStore();
 //Extraer atributos de forma reactiva
-const { loggedIn, loggedUser } = storeToRefs(loginStore);
+//Dentro de <script setup> utilizar 'this' para accederlos
+//Fuera (template) no hace falta.
+let { loggedIn, loggedUser } = storeToRefs(loginStore);
 //Extraer metodos de forma destructurativa
 const { login, logout, guardarUsuario } = loginStore;
 
@@ -73,6 +75,7 @@ async function loginUsuario(solicitante){
         if (usuario.password === solicitante.password){
           login()
           guardarUsuario(usuario)
+          return true
         }else{
           alert("Login rechazado.")
         }
@@ -87,10 +90,10 @@ async function loginUsuario(solicitante){
 }
 
 //Iniciar sesion
-function loguear(usuario){
-  loginUsuario(usuario)
-  if (loggedIn){
-    //router.push('/')
+async function loguear(usuario){
+  await loginUsuario(usuario)
+  if (this.loggedIn){
+    router.push('/')
   }
 }
 
@@ -101,3 +104,4 @@ function desloguear(){
 }
 
 </script>
+

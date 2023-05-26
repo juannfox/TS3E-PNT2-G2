@@ -26,7 +26,7 @@ State son atributos, actions son metodos, this es el store
 https://pinia.vuejs.org/core-concepts
 */
 const piniaOptions = {
-  state: () => (stateObject),
+  state: () => {return stateObject},
   actions: actionsObject
 }
 
