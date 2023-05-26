@@ -1,4 +1,3 @@
-import usuariosService from '@/services/usuariosService.js';
 import { defineStore} from 'pinia';
 
 //Atributos
@@ -13,26 +12,15 @@ const actionsObject = {
     this.loggedIn = false
   },
 
-  async login(solicitante){
-    try{
-      //Query al backend
-      let usuario = usuariosService.obtenerUsuario(solicitante.email)
-      //Validacion de credenciales
-      if ((usuario != null) && usuario.password === solicitante.password){
-          this.loggedIn = true
-          //Remueve la password del objeto usuario
-          const {password: _, ...usuario} = usuario
-          this.loggedUser = usuario
-      }else{
-        console.log()
-        alert("ERROR: Login rechazado.");
-      }
-    } catch (e){
-      alert(`ERROR: ${e}`);
-    }
+  login(){
+    this.loggedIn = true
+  },
+
+  guardarUsuario(usuario){
+    let {password: _, ...usuarioRecortado} = usuario
+    this.loggedUser = usuarioRecortado
   }
 }
-
 /*Opciones de Pinia
 State son atributos, actions son metodos, this es el store
 https://pinia.vuejs.org/core-concepts

@@ -7,31 +7,30 @@
         </ion-menu-toggle>
       </ion-header>
       <ion-content class="ion-padding">
-        <ion-icon :icon="warning"></ion-icon>
-        <ion-text v-if="isLogin" color="secondary">
-          <h1>{{ usuarioLogueado }}</h1>
+        <ion-text v-if="loggedIn" color="secondary">
+          <h1>{{ loggedUser.name }}</h1>
         </ion-text>
 
-        <ion-button v-if="!isLogin" v-on:click="this.$router.push('/login')"
+        <ion-button v-if="!loggedIn" v-on:click="this.$router.push('/login')"
           >Login</ion-button
         >
         <ion-button
           fill="clear"
-          v-if="isLogin"
+          v-if="loggedIn"
           @click="this.$router.push('/mapa')"
           >Mapa de estacionamientos</ion-button
         >
         <ion-button
           fill="clear"
-          v-if="isLogin"
+          v-if="loggedIn"
           @click="this.$router.push('/miestacionamiento')"
           >Mi estacionamiento</ion-button
         >
         <ion-button
           fill="clear"
           color="danger"
-          v-if="isLogin"
-          v-on:click="toggleLogin"
+          v-if="loggedIn"
+          v-on:click="logout"
           >Logout</ion-button
         >
       </ion-content>
@@ -56,17 +55,25 @@
 </template>
 
 <script setup lang="js">
+/*
+El import defineComponent de Vue es necesario
+para importar componentes de Vue
+https://ionicframework.com/docs/vue/troubleshooting#failed-to-resolve-component
+*/
+import { ref, defineComponent } from 'vue';
 import {
+  IonHeader,
+  IonToolbar,
+  IonTitle,
+  IonFooter,
   IonApp,
   IonContent,
-  IonIcon,
   IonMenu,
   IonMenuToggle,
   IonButton,
   IonRouterOutlet,
   IonText
 } from '@ionic/vue';
-import { ref, defineComponent } from 'vue';
 import {
   archiveOutline,
   archiveSharp,
@@ -82,12 +89,16 @@ import {
   warningSharp,
 } from 'ionicons/icons';
 import { storeToRefs } from 'pinia';
-import { useLoginStore } from '@/login.js';
+import {useLoginStore} from '@/state/loginStore.js';
 
-const store = useLoginStore();
-const { isLogin, usuarioLogueado } = storeToRefs(store);
-const { toggleLogin } = store;
+//Instanciar store con su funcion instructiva
+const loginStore = useLoginStore();
+//Extraer atributos de forma reactiva
+const { loggedIn, loggedUser } = storeToRefs(loginStore);
+//Extraer metodos de forma destructurativa
+const { logout } = loginStore;
 
+const menuType = ref('overlay');
 const selectedIndex = ref(0);
 const appPages = [
   {

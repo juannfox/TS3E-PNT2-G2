@@ -7,7 +7,7 @@ const routes = [
   },
   {
     path: '/login',
-    component: () => import('@/views/Login.vue')
+    component: () => import('@/views/LoginView.vue')
   },
   {
     path: '/mapa',
@@ -19,7 +19,7 @@ const routes = [
   },
   {
     path: '/usuarios',
-    component: () => import('@/views/Usuarios.vue')
+    component: () => import('@/views/UsuariosView.vue')
   }
 
 ]

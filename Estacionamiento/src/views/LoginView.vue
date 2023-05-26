@@ -9,26 +9,27 @@
       </ion-toolbar>
     </ion-header>
 
-    <ion-content :fullscreen="true" v-if="!loggedIn">
-      <form>
+    <ion-content :fullscreen="true">
+      <form v-if="!loggedIn">
         <ion-item style="margin-top:100px">
           <ion-text postion="floating">Email: </ion-text>
-          <ion-input type="email" v-model="usuario.email" style="margin-left:10px;" required></ion-input>
+          <ion-input type="email" v-model="usuarioInput.email" style="margin-left:10px;" required></ion-input>
         </ion-item>
         <ion-item>
           <ion-text postion="floating">Contraseña: </ion-text>
-          <ion-input type="password" v-model="usuario.password" style="margin-left:10px;" required></ion-input>
+          <ion-input type="password" v-model="usuarioInput.password" style="margin-left:10px;" required></ion-input>
         </ion-item>
-        <ion-button v-on:click="loguear(usuario)">Login</ion-button>
+        <ion-button v-on:click="loguear(usuarioInput)">Login</ion-button>
       </form>
-    </ion-content>
-    <ion-content :fullscreen="true" v-if="loggedIn">
-      <ion-text color="primary">
+      <div v-if="loggedIn">
+        <ion-text color="primary">
         <h1>Usted ya se encuentra loggueado: {{ loggedUser.email }}.</h1>
-      </ion-text>
-      <ion-button v-on:click="desloguear">Cerrar sesión</ion-button>
-      <ion-button v-on:click="this.$router.push('/')">Volver a Inicio</ion-button>
+        </ion-text>
+        <ion-button v-on:click="desloguear">Cerrar sesión</ion-button>
+        <ion-button v-on:click="this.$router.push('/')">Volver a Inicio</ion-button>
+      </div>
     </ion-content>
+
   </ion-page>
 </template>
 
@@ -44,7 +45,7 @@ import {
   IonItem,
   IonText,
 } from '@ionic/vue';
-import usuariosService from '@/services/usuariosService.js'
+import { obtenerUsuario } from '@/services/usuariosService.js';
 import { storeToRefs } from 'pinia';
 import {useLoginStore} from '@/state/loginStore.js';
 import { useRouter } from 'vue-router';
@@ -55,19 +56,41 @@ const loginStore = useLoginStore();
 //Extraer atributos de forma reactiva
 const { loggedIn, loggedUser } = storeToRefs(loginStore);
 //Extraer metodos de forma destructurativa
-const { login, logout } = loginStore;
+const { login, logout, guardarUsuario } = loginStore;
 
 //Placeholder
-const usuario = {
+const usuarioInput = {
   email: "",
   password: ""
 };
 
+async function loginUsuario(solicitante){
+    try{
+      //Query al backend
+      let usuario = await obtenerUsuario(solicitante.email)
+      if (usuario != undefined){
+        //Validacion de credenciales
+        if (usuario.password === solicitante.password){
+          login()
+          guardarUsuario(usuario)
+        }else{
+          alert("Login rechazado.")
+        }
+      }else{
+        alert("Usuario no encontrado.")
+      }
+    } catch (e){
+      alert("Error al iniciar sesión.")
+      console.log(`ERROR '${e.name}': ${e.message}\n${e.stack}`)
+      console.trace()
+    }
+}
+
 //Iniciar sesion
 function loguear(usuario){
-  login(usuario)
+  loginUsuario(usuario)
   if (loggedIn){
-    router.push('/')
+    //router.push('/')
   }
 }
 
