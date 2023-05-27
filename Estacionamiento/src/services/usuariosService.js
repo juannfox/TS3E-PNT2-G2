@@ -29,12 +29,13 @@ async function obtenerUsuario(email){
 
 async function existeUsuario(email){
   let usuario = await obtenerUsuario(email)
-  return usuario != null
+  return usuario != undefined
 }
 
 async function crearUsuario(usuario){
   //Verificar que no existsa el usuario
-  if (! existeUsuario()){
+  let usuarioYaExiste = await existeUsuario(usuario.email)
+  if (! usuarioYaExiste){
     //Traducir los nombres de los campos
     //id y fecha son auto generados
     let payload = {
@@ -45,11 +46,53 @@ async function crearUsuario(usuario){
     }
     try{
       const response = await apiClient.post('', payload);
-      return response;
+      return response.status == 201;
     } catch(e){
       console.log(`${e}`)
     }
+  }else{
+    console.log(`${usuario.email} ya existe, ignorando...`)
   }
 }
 
-export {obtenerUsuario, obtenerUsuarios, crearUsuario}
+async function actualizarUsuario(usuarioActualizado){
+  //Verificar que existsa el usuario
+  let usuarioExistente = await obtenerUsuario(usuarioActualizado.email)
+  if (usuarioExistente != undefined){
+    //Traducir los nombres de los campos
+    //id y fecha son auto generados
+    let payload = {
+      name: usuarioActualizado.nombre,
+      email: usuarioActualizado.email,
+      password: usuarioActualizado.password,
+      rol: usuarioActualizado.rol
+    }
+    try{
+      const response = await apiClient.put(`/${usuarioExistente.id}`, payload);
+      return response.status == 201
+    } catch(e){
+      console.log(`${e}`)
+    }
+  }else{
+    console.log(`${usuarioActualizado.email} no existe, creando...`)
+    return await crearUsuario(usuarioActualizado)
+  }
+}
+
+async function eliminarUsuario(email){
+  //Verificar que existsa el usuario
+  let usuarioExistente = await obtenerUsuario(email)
+  if (usuarioExistente != undefined){
+    try{
+      const response = await apiClient.delete(`/${usuarioExistente.id}`);
+      return response.status == 201
+    } catch(e){
+      console.log(`${e}`)
+    }
+  }else{
+    console.log(`${email} no existe, no es necesario eliminar.`)
+    return true
+  }
+}
+
+export {obtenerUsuario, obtenerUsuarios, crearUsuario, actualizarUsuario, eliminarUsuario}
