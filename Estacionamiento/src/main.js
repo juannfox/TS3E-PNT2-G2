@@ -4,7 +4,7 @@ import router from '@/router';
 import { createPinia } from 'pinia'
 import piniaPluginPersistedState from "pinia-plugin-persistedstate"
 import { IonicVue } from '@ionic/vue';
-import {axiosPlugin} from '@/plugins/axiosPlugin.js'
+import { axiosPlugin } from '@/plugins/axiosPlugin.js'
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/vue/css/core.css';
@@ -22,7 +22,7 @@ import '@ionic/vue/css/display.css';
 /* Theme variables */
 import './theme/variables.css';
 
-//Configuracion de Axios API client (global)
+//Configuracion de Axios API client (global, disponible en <template>)
 const axiosOptions = {
   baseURL: 'https://646be9b97b42c06c3b2a916c.mockapi.io/api/v1',
   headers: {
