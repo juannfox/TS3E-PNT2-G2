@@ -27,4 +27,29 @@ async function obtenerUsuario(email){
   }
 }
 
-export {obtenerUsuario, obtenerUsuarios}
+async function existeUsuario(email){
+  let usuario = await obtenerUsuario(email)
+  return usuario != null
+}
+
+async function crearUsuario(usuario){
+  //Verificar que no existsa el usuario
+  if (! existeUsuario()){
+    //Traducir los nombres de los campos
+    //id y fecha son auto generados
+    let payload = {
+      name: usuario.nombre,
+      email: usuario.email,
+      password: usuario.password,
+      rol: usuario.rol
+    }
+    try{
+      const response = await apiClient.post('', payload);
+      return response;
+    } catch(e){
+      console.log(`${e}`)
+    }
+  }
+}
+
+export {obtenerUsuario, obtenerUsuarios, crearUsuario}
