@@ -23,6 +23,10 @@ const routes = [
   {
     path: '/usuarios',
     component: () => import('@/views/UsuariosView.vue')
+  },
+  {
+    path: '/usuarios/perfil',
+    component: () => import('@/views/DetallesUsuarioView.vue')
   }
 
 ]
