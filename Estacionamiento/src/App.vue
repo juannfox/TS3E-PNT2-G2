@@ -29,7 +29,7 @@
 
         <ion-button
           fill="clear"
-          v-if="loggedIn"
+          v-if="loggedIn && loggedUser.rol == 'administrador'"
           @click="this.$router.push('/usuarios')"
           >Listado de usuarios</ion-button
         >

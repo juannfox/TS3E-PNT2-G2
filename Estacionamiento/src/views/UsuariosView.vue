@@ -1,31 +1,32 @@
 
 <template>
-
-  <ion-page>
-      <ion-content>
-        <h2>Usuarios</h2>
+  <!--v-if="loggedUser.rol == 'administrador'"-->
+  <ion-page v-if="loggedUser.rol == 'administrador'">
+    <ion-content>
+      <h2>Usuarios</h2>
         <div v-if="! usuarios.length > 0">
-          <ion-input placeholder="Ingrese email" v-model="email"></ion-input>
-          <ion-button @click="cargarUsuario(email)">Buscar</ion-button>
-        </div>
-        <ion-button @click="cargarUsuarios">Mostrar todos</ion-button>
-        <div>
-          <ion-toast>{{ usuario.nombre }}</ion-toast>
-        </div>
-        <div v-if="usuarios.length > 0">
-          <ion-list v-bind:key="usuario" v-for="usuario in usuarios">
-            <ion-item>
-              <ion-label>{{ usuario.email }}</ion-label>
-            </ion-item>
-          </ion-list>
-        </div>
-      </ion-content>
+        <ion-input placeholder="Ingrese email" v-model="email"></ion-input>
+        <ion-button @click="cargarUsuario(email)">Buscar</ion-button>
+      </div>
+      <ion-button @click="cargarUsuarios">Mostrar todos</ion-button>
+      <div>
+        <ion-toast>{{ usuario.nombre }}</ion-toast>
+      </div>
+      <div v-if="usuarios.length > 0">
+        <ion-list v-bind:key="usuario" v-for="usuario in usuarios">
+          <ion-item>
+            <ion-label>{{ usuario.email }}</ion-label>
+          </ion-item>
+        </ion-list>
+      </div>
+    </ion-content>
   </ion-page>
 </template>
 
 <script>
 import { ref, defineComponent } from 'vue';
-import { IonButton,
+import {
+  IonButton,
   IonPage,
   IonContent,
   IonList,
@@ -36,17 +37,21 @@ import { IonButton,
 } from "@ionic/vue";
 import { obtenerUsuario, obtenerUsuarios } from "@/services/usuariosService";
 
+import { storeToRefs } from 'pinia';
+import { useLoginStore } from '@/state/loginStore.js';
+
+
 export default {
-  components: {IonPage, IonButton, IonContent, IonList, IonInput, IonToast, IonLabel, IonItem},
+  components: { IonPage, IonButton, IonContent, IonList, IonInput, IonToast, IonLabel, IonItem },
   methods: {
     async agregaraLista() {
       // Falta control de ingreso de datos
       try {
-        const elemento = {...this.elemento}
+        const elemento = { ...this.elemento }
         await usuariosService.agregar(elemento)
         await this.cargarLista()
         this.elemento = {}
-      } catch(e) {
+      } catch (e) {
         alert(e)
       }
     },
@@ -57,7 +62,7 @@ export default {
       try {
         const respuesta = await obtenerUsuarios()
         this.usuarios = respuesta
-      } catch(e) {
+      } catch (e) {
         alert(e)
       }
     },
@@ -65,17 +70,17 @@ export default {
       try {
         await eliminar(id)
         await this.cargarLista()
-      } catch( e) {
+      } catch (e) {
         alert('Se produjo un error')
       }
     },
     async modificar(id) {
       try {
-        const elemento = {...this.elemento}
-        await modificar(id,elemento)
+        const elemento = { ...this.elemento }
+        await modificar(id, elemento)
         await this.cargarLista()
         this.elemento = {}
-      } catch( e) {
+      } catch (e) {
         alert('Se produjo un error')
       }
     }
@@ -88,11 +93,17 @@ export default {
       elemento: {},
       ocultar: true
     }
+  },
+  setup() {
+    //Instanciar store con su funcion instructiva
+    const loginStore = useLoginStore();
+    //Extraer atributos de forma reactiva
+    const { loggedUser } = storeToRefs(loginStore);
+    return { loggedUser }
   }
 }
 </script>
 
 
-<style>
-</style>
+<style></style>
 
