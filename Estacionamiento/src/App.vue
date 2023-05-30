@@ -1,24 +1,18 @@
 <template>
   <ion-app>
-    <ion-menu :type="menuType" content-id="main-content">
+    <ion-menu :type="menuType" content-id="main-content" style="justify-content: flex-start">
       <ion-header>
         <ion-menu-toggle>
           <ion-button fill="outline">Contraer</ion-button>
         </ion-menu-toggle>
       </ion-header>
-      <ion-content class="ion-padding">
+      <div style="display:flex; flex-direction:column; gap:1rem; align-items:start; justify-content:flex-start; padding-left:1rem">
         <ion-text v-if="loggedIn" color="secondary">
           <h1>{{ loggedUser.name }}</h1>
         </ion-text>
 
         <ion-button v-if="!loggedIn" v-on:click="this.$router.push('/login')"
           >Login</ion-button
-        >
-        <ion-button
-          fill="clear"
-          v-if="loggedIn"
-          @click="this.$router.push('/mapa')"
-          >Mapa de estacionamientos</ion-button
         >
         <ion-button
           fill="clear"
@@ -33,6 +27,12 @@
           @click="this.$router.push('/usuarios')"
           >Listado de usuarios</ion-button
         >
+        <ion-button
+          fill="clear"
+          v-if="loggedIn"
+          @click="this.$router.push('/cocheras')"
+          >Lista Cocheras</ion-button
+        >
 
         <ion-button
           fill="clear"
@@ -41,7 +41,7 @@
           v-on:click="logout"
           >Logout</ion-button
         >
-      </ion-content>
+      </div>
     </ion-menu>
 
     <ion-header>
@@ -55,7 +55,9 @@
       </ion-toolbar>
     </ion-header>
 
-    <ion-router-outlet id="main-content"></ion-router-outlet>
+    <ion-content>
+      <ion-router-outlet id="main-content"></ion-router-outlet>
+    </ion-content>
 
     <ion-footer>
       <ion-toolbar>
@@ -279,5 +281,9 @@ ion-note {
 
 ion-item.selected {
   --color: var(--ion-color-primary);
+}
+
+ion-menu-toggle{
+  margin-left: 1rem;
 }
 </style>

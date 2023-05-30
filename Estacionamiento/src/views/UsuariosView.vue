@@ -1,25 +1,27 @@
 
 <template>
-  <!--v-if="loggedUser.rol == 'administrador'"-->
-  <ion-page v-if="loggedUser.rol == 'administrador'">
-    <ion-content>
-      <h2>Usuarios</h2>
-        <div v-if="! usuarios.length > 0">
-        <ion-input placeholder="Ingrese email" v-model="email"></ion-input>
-        <ion-button @click="cargarUsuario(email)">Buscar</ion-button>
+
+  <ion-page>
+      <div class="columna">
+        <h2>Usuarios</h2>
+        <div style="background-color: #454545; border-radius:5px; padding:1rem">
+          <div class="contenedorBuscar">
+            <ion-input placeholder="Ingrese email" v-model="email" style="flex:1"></ion-input>
+            <ion-button @click="cargarUsuario(email)" style="flex:1; height:auto">Buscar</ion-button>
+          </div>
+        </div>
+        <ion-button @click="mostrar">Mostrar todos</ion-button>
+        <div>
+          <ion-toast>{{ usuario.nombre }}</ion-toast>
+        </div>
+        <div v-if="mostrarItems">
+          <ion-list v-bind:key="usuario" v-for="usuario in usuarios">
+            <ion-item>
+              <ion-label>{{ usuario.email }}</ion-label>
+            </ion-item>
+          </ion-list>
+        </div>
       </div>
-      <ion-button @click="cargarUsuarios">Mostrar todos</ion-button>
-      <div>
-        <ion-toast>{{ usuario.nombre }}</ion-toast>
-      </div>
-      <div v-if="usuarios.length > 0">
-        <ion-list v-bind:key="usuario" v-for="usuario in usuarios">
-          <ion-item>
-            <ion-label>{{ usuario.email }}</ion-label>
-          </ion-item>
-        </ion-list>
-      </div>
-    </ion-content>
   </ion-page>
 </template>
 
@@ -44,6 +46,10 @@ import { useLoginStore } from '@/state/loginStore.js';
 export default {
   components: { IonPage, IonButton, IonContent, IonList, IonInput, IonToast, IonLabel, IonItem },
   methods: {
+
+    mostrar(){
+      this.mostrarItems  = !this.mostrarItems
+    },
     async agregaraLista() {
       // Falta control de ingreso de datos
       try {
@@ -91,7 +97,8 @@ export default {
       usuario: null,
       usuarios: [],
       elemento: {},
-      ocultar: true
+      ocultar: true,
+      mostrarItems:false
     }
   },
   setup() {
@@ -105,5 +112,19 @@ export default {
 </script>
 
 
-<style></style>
+<style>
+
+
+.contenedorBuscar{
+  display:flex;
+  flex-direction: row;
+  gap: 2rem;
+}
+.columna{
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  gap:2rem
+}
+</style>
 
