@@ -1,33 +1,30 @@
 <template>
   <ion-page>
-    <ion-header :translucent="true">
-      <ion-content>
-        <!--Espacio en blanco para que el Header se ubique debajo de la barra de menú-->
-      </ion-content>
-      <ion-toolbar>
-        <ion-title class="ion-text-center">Login</ion-title>
-      </ion-toolbar>
-    </ion-header>
-
-    <ion-content :fullscreen="true">
-      <form v-if="!loggedIn">
-        <ion-item style="margin-top:100px">
-          <ion-text postion="floating">Email: </ion-text>
-          <ion-input type="email" v-model="usuarioInput.email" style="margin-left:10px;" required></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-text postion="floating">Contraseña: </ion-text>
-          <ion-input type="password" v-model="usuarioInput.password" style="margin-left:10px;" required></ion-input>
-        </ion-item>
-        <ion-button v-on:click="loguear(usuarioInput)">Login</ion-button>
-      </form>
-      <div v-if="loggedIn">
-        <ion-text>
-          <h2>H1: Sesión iniciada: {{ loggedUser.email }}.</h2>
-        </ion-text>
-        <ion-button v-on:click="desloguear">Cerrar sesión</ion-button>
-      </div>
-    </ion-content>
+    <ion-container class="contenedor">
+      <ion-card class="carta">
+        <h1 >
+        Login
+        </h1>
+        <ion-img class="logo" src="public/favicon.png" alt="Parkinglot.app" ></ion-img>
+        <form v-if="!loggedIn" style="display:flex ; flex-direction:column; gap:1rem; align-item:center">
+          <ion-item style="margin-top:100px">
+            <ion-text postion="floating">Email: </ion-text>
+            <ion-input type="email" v-model="usuarioInput.email" style="margin-left:10px;" required></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-text postion="floating">Contraseña: </ion-text>
+            <ion-input type="password" v-model="usuarioInput.password" style="margin-left:10px;" required></ion-input>
+          </ion-item>
+          <ion-button v-on:click="loguear(usuarioInput)">Login</ion-button>
+        </form>
+        <div v-if="loggedIn">
+          <ion-text>
+            <h2>H1: Sesión iniciada: {{ loggedUser.email }}.</h2>
+          </ion-text>
+          <ion-button v-on:click="desloguear">Cerrar sesión</ion-button>
+        </div>
+      </ion-card>
+    </ion-container>
 
   </ion-page>
 </template>
@@ -101,4 +98,24 @@ function desloguear(){
 }
 
 </script>
+
+<style >
+.carta{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap:1rem;
+  padding: 2rem;
+}
+.contenedor{
+  display: flex;
+  width: 1;
+  justify-content: center;  
+  margin-top: 150px;
+}
+.logo{
+  scale: 2;
+}
+</style>
 
