@@ -26,12 +26,20 @@ const routes = [
   {
     path: '/usuarios',
     component: () => import('@/views/UsuariosView.vue'),
-    meta: { RequireAuth: true }
+    meta: {
+      RequireAuth: true,
+      AllowedRole: "administrador"
+    }
   },
   {
     path: '/usuarios/perfil',
     component: () => import('@/views/DetallesUsuarioView.vue'),
     meta: { RequireAuth: true }
+  },
+  {
+    name: 'error',
+    path: '/error',
+    component: () => import('@/views/ErrorView.vue')
   }
 
 ]
@@ -41,15 +49,22 @@ const router = createRouter({
   routes
 })
 
-
-router.beforeEach((to, from, next) => {
+router.beforeEach((to, from) => {
   const store = useLoginStore();
-  if (to.matched.some(r => r.meta.RequireAuth) && !store.loggedIn) {
-    next('/login')  // ir a una ruta que indique error 401
-  } else {
-    next()
+  if (to.matched.some(r => r.meta.RequireAuth) && !store.loggedIn){
+    return '/login'
+  }else{
+    if (store.loggedIn) {
+      if (to.matched.every(r => (r.meta.AllowedRole) && (r.meta.AllowedRole !== store.loggedUser.rol))){
+      return {
+        name: 'error',
+        query: {
+          mensaje: 'Acceso denegado'
+        }
+      }
+    }
   }
-})
+}})
 
 
 export default router

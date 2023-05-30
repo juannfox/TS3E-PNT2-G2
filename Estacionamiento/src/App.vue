@@ -55,7 +55,15 @@
       </ion-toolbar>
     </ion-header>
 
-    <ion-router-outlet id="main-content"></ion-router-outlet>
+    <!--
+      El contenido de la pagina es la salida (o outlet) del Router.
+      Este debe estar envuelto en un componente ion-content para
+      poder ocupar inteligentemente el espacio entre el header
+      y el footer (no overlapear).
+    -->
+    <ion-content>
+      <ion-router-outlet id="main-content"></ion-router-outlet>
+    </ion-content>
 
     <ion-footer>
       <ion-toolbar>
