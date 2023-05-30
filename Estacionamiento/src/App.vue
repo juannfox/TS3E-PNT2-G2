@@ -1,6 +1,6 @@
 <template>
   <ion-app>
-    <ion-menu :type="menuType" content-id="main-content" style="justify-content: flex-start">
+    <ion-menu :type="menuType" content-id="main-content" >
       <ion-header>
         <ion-menu-toggle>
           <ion-button fill="outline">Contraer</ion-button>
@@ -187,6 +187,7 @@ ion-menu.md ion-note {
   padding-left: 10px;
 }
 
+
 ion-menu.md ion-list#inbox-list {
   border-bottom: 1px solid var(--ion-color-step-150, #d7d8da);
 }
@@ -286,4 +287,5 @@ ion-item.selected {
 ion-menu-toggle{
   margin-left: 1rem;
 }
+
 </style>

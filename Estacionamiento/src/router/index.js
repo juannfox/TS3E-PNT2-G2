@@ -35,6 +35,11 @@ const routes = [
     component: () => import("@/views/DetallesUsuarioView.vue"),
     meta: {RequireAuth: true},
   },
+  {
+    path: "/cocheras",
+    component: () => import("@/views/CocherasView.vue"),
+    meta: {RequireAuth: true},
+  },
 ];
 
 const router = createRouter({
