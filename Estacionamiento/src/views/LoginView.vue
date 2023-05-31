@@ -1,6 +1,6 @@
 <template>
   <ion-page>
-    <ion-container class="contenedor">
+    <div class="contenedor">
       <ion-card class="carta">
         <h1 >
         Login
@@ -24,7 +24,7 @@
           <ion-button v-on:click="desloguear">Cerrar sesión</ion-button>
         </div>
       </ion-card>
-    </ion-container>
+    </div>
 
   </ion-page>
 </template>
@@ -40,7 +40,9 @@ import {
   IonToolbar,
   IonItem,
   IonText,
-  IonAlert
+  IonAlert,
+  IonCard,
+  IonImg
 } from '@ionic/vue';
 import { obtenerUsuario } from '@/services/usuariosService.js';
 import { storeToRefs } from 'pinia';

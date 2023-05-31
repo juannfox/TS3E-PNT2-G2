@@ -42,6 +42,16 @@ const routes = [
     name: 'error',
     path: '/error',
     component: () => import('@/views/ErrorView.vue')
+  },
+  {
+    name: 'cocheras',
+    path: '/cocheras',
+    component: () => import('@/views/CocherasView.vue')
+  },
+  {
+    name: 'sobreNosotros',
+    path: '/sobreNosotros',
+    component: () => import('@/views/SobreNosotrosView.vue')
   }
 
 ]

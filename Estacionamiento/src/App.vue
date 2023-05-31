@@ -67,7 +67,10 @@
 
     <ion-footer>
       <ion-toolbar>
-        <ion-title>Footer</ion-title>
+        <ion-button 
+        fill="clear"
+        v-on:click="this.$router.push('/sobreNosotros')"
+        >Sobre Nosotros</ion-button>
       </ion-toolbar>
     </ion-footer>
   </ion-app>
@@ -92,7 +95,7 @@ import {
   IonButton,
   IonRouterOutlet,
   IonText,
-  IonIcon
+  IonIcon,
 } from '@ionic/vue';
 import {
   homeOutline,

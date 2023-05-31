@@ -1,7 +1,7 @@
 
 <template>
 
-  <ion-page>
+  <ion-page v-if="loggedUser.rol === 'administrador'">
       <div class="columna">
         <h2>Usuarios</h2>
         <div style="background-color: #454545; border-radius:5px; padding:1rem">
@@ -46,7 +46,6 @@ import { useLoginStore } from '@/state/loginStore.js';
 export default {
   components: { IonPage, IonButton, IonContent, IonList, IonInput, IonToast, IonLabel, IonItem },
   methods: {
-
     mostrar(){
       this.mostrarItems  = !this.mostrarItems
     },
@@ -98,7 +97,7 @@ export default {
       usuarios: [],
       elemento: {},
       ocultar: true,
-      mostrarItems:false
+      mostrarItems: false
     }
   },
   setup() {
@@ -111,9 +110,7 @@ export default {
 }
 </script>
 
-
 <style>
-
 
 .contenedorBuscar{
   display:flex;

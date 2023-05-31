@@ -8,7 +8,7 @@
             <ion-col>Piso</ion-col>
             <ion-col>Numero</ion-col>
             <ion-col>Estado</ion-col>
-            <ion-col>Botones</ion-col>
+            <ion-col v-if="loggedUser.rol === 'administrador'">Botones</ion-col>
           </ion-row>
           <ion-row v-bind:key="cochera" v-for="cochera in cocheras">
             <ion-col>{{ cochera.piso }}</ion-col>
@@ -21,7 +21,7 @@
                 >Libre</ion-chip
               ></ion-col
             >
-            <ion-col>
+            <ion-col v-if="loggedUser.rol === 'administrador'">
               <ion-grid>
                 <ion-row class="botonesRow">
                   <ion-button
@@ -66,6 +66,8 @@ import {
   obtenerCocheras,
   cambiarEstadoCochera,
 } from "@/services/cocherasService";
+import { storeToRefs } from 'pinia';
+import { useLoginStore } from '@/state/loginStore.js';
 
 export default {
   components: {
@@ -113,6 +115,13 @@ export default {
   },
   mounted(){
     this.cargarCocheras()
+  },
+  setup() {
+    //Instanciar store con su funcion instructiva
+    const loginStore = useLoginStore();
+    //Extraer atributos de forma reactiva
+    const { loggedUser } = storeToRefs(loginStore);
+    return { loggedUser }
   }
 };
 </script>
