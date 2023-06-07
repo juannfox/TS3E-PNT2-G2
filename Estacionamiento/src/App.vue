@@ -1,47 +1,52 @@
 <template>
   <ion-app>
-    <ion-menu :type="menuType" content-id="main-content" >
+    <ion-menu type="overlay" content-id="main-content" style="justify-content: flex-start">
       <ion-header>
         <ion-menu-toggle>
           <ion-button fill="outline">Contraer</ion-button>
         </ion-menu-toggle>
       </ion-header>
-      <div style="display:flex; flex-direction:column; gap:1rem; align-items:start; justify-content:flex-start; padding-left:1rem">
-        <ion-text v-if="loggedIn" color="secondary">
-          <h1>{{ loggedUser.name }}</h1>
-        </ion-text>
+      <ion-content>
+        <div style="display:flex; flex-direction:column; gap:1rem; align-items:start; justify-content:flex-start; padding-left:1rem">
+          <ion-text v-if="loggedIn" color="secondary">
+            <h1>{{ loggedUser.name }}</h1>
+          </ion-text>
 
-        <ion-button v-if="!loggedIn" v-on:click="this.$router.push('/login')"
-          >Login</ion-button
-        >
-        <ion-button
-          fill="clear"
-          v-if="loggedIn"
-          @click="this.$router.push('/miestacionamiento')"
-          >Mi estacionamiento</ion-button
-        >
+          <ion-button
+            v-if="!loggedIn"
+            v-on:click="this.$router.push('/login')">
+            Login
+          </ion-button>
 
-        <ion-button
-          fill="clear"
-          v-if="loggedIn && loggedUser.rol == 'administrador'"
-          @click="this.$router.push('/usuarios')"
-          >Listado de usuarios</ion-button
-        >
-        <ion-button
-          fill="clear"
-          v-if="loggedIn"
-          @click="this.$router.push('/cocheras')"
-          >Lista Cocheras</ion-button
-        >
+          <ion-button
+            fill="clear"
+            v-if="loggedIn"
+            @click="this.$router.push('/miestacionamiento')"
+            >Mi estacionamiento</ion-button
+          >
 
-        <ion-button
-          fill="clear"
-          color="danger"
-          v-if="loggedIn"
-          v-on:click="logout"
-          >Logout</ion-button
-        >
-      </div>
+          <ion-button
+            fill="clear"
+            v-if="loggedIn && loggedUser.rol == 'administrador'"
+            @click="this.$router.push('/usuarios')"
+            >Listado de usuarios</ion-button
+          >
+          <ion-button
+            fill="clear"
+            v-if="loggedIn"
+            @click="this.$router.push('/cocheras')"
+            >Lista Cocheras</ion-button
+          >
+
+          <ion-button
+            fill="clear"
+            color="danger"
+            v-if="loggedIn"
+            v-on:click="logout"
+            >Logout</ion-button
+          >
+        </div>
+      </ion-content>
     </ion-menu>
 
     <ion-header>
@@ -67,7 +72,7 @@
 
     <ion-footer>
       <ion-toolbar>
-        <ion-button 
+        <ion-button
         fill="clear"
         v-on:click="this.$router.push('/sobreNosotros')"
         >Sobre Nosotros</ion-button>
@@ -86,7 +91,6 @@ import { ref, defineComponent } from 'vue';
 import {
   IonHeader,
   IonToolbar,
-  IonTitle,
   IonFooter,
   IonApp,
   IonContent,
@@ -98,19 +102,7 @@ import {
   IonIcon,
 } from '@ionic/vue';
 import {
-  homeOutline,
-  archiveOutline,
-  archiveSharp,
-  heartOutline,
-  heartSharp,
-  mailOutline,
-  mailSharp,
-  paperPlaneOutline,
-  paperPlaneSharp,
-  trashOutline,
-  trashSharp,
-  warningOutline,
-  warningSharp,
+  homeOutline
 } from 'ionicons/icons';
 import { storeToRefs } from 'pinia';
 import {useLoginStore} from '@/state/loginStore.js';
@@ -123,52 +115,7 @@ const { loggedIn, loggedUser } = storeToRefs(loginStore);
 const { logout } = loginStore;
 
 const menuType = ref('overlay');
-const selectedIndex = ref(0);
-const appPages = [
-  {
-    title: 'Inbox',
-    url: '/folder/Inbox',
-    iosIcon: mailOutline,
-    mdIcon: mailSharp,
-  },
-  {
-    title: 'Outbox',
-    url: '/folder/Outbox',
-    iosIcon: paperPlaneOutline,
-    mdIcon: paperPlaneSharp,
-  },
-  {
-    title: 'Favorites',
-    url: '/folder/Favorites',
-    iosIcon: heartOutline,
-    mdIcon: heartSharp,
-  },
-  {
-    title: 'Archived',
-    url: '/folder/Archived',
-    iosIcon: archiveOutline,
-    mdIcon: archiveSharp,
-  },
-  {
-    title: 'FrontEnd',
-    url: '/folder/Trash',
-    iosIcon: trashOutline,
-    mdIcon: trashSharp,
-  },
-  {
-    title: 'Spam',
-    url: '/folder/Spam',
-    iosIcon: warningOutline,
-    mdIcon: warningSharp,
-  },
-];
 
-const labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
-
-const path = window.location.pathname.split('folder/')[1];
-if (path !== undefined) {
-  selectedIndex.value = appPages.findIndex((page) => page.title.toLowerCase() === path.toLowerCase());
-}
 </script>
 
 <style scoped>

@@ -21,7 +21,7 @@
                 >Libre</ion-chip
               ></ion-col
             >
-            <ion-col v-if="loggedUser.rol === 'administrador'">
+            <ion-col>
               <ion-grid>
                 <ion-row class="botonesRow">
                   <ion-button
@@ -32,6 +32,7 @@
                   <ion-button
                     :disabled="!cochera.ocupada"
                     @click="liberarCochera(cochera)"
+                    v-if="loggedUser.rol === 'administrador'"
                     >Liberar</ion-button
                   >
                 </ion-row>
