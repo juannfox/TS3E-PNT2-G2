@@ -17,10 +17,12 @@ async function obtenerCocheras() {
   }
 }
 
-async function obtenerCochera(id) {
+async function obtenerCochera(piso, numero) {
   try {
     const Cocheras = await obtenerCocheras();
-    let cochera = Cocheras.find((cochera) => cochera.id === id);
+    let cochera = Cocheras.find(
+      (cochera) => cochera.piso === piso && cochera.numero === numero
+    );
     return cochera;
   } catch (e) {
     alert(`${e}`);
@@ -47,29 +49,44 @@ async function cambiarEstadoCochera(estado, cochera) {
   }
 }
 
-async function existeCochera(id) {
-  let usuario = await obtenerCochera(id);
-  return usuario !== undefined;
+async function existeCochera(piso, numero) {
+  let cochera = await obtenerCochera(piso, numero);
+  return cochera !== undefined;
 }
 
 async function crearCochera(cochera) {
   //Verificar que no existsa el usuario
-  if (!existeCochera(cochera.id)) {
+  if (!(await existeCochera(cochera.piso, cochera.numero))) {
     //Traducir los nombres de los campos
     //id y fecha son auto generados
     let payload = {
       piso: cochera.piso,
       ocupada: cochera.ocupada,
       numero: cochera.numero,
-      d: cochera.id,
+      id: cochera.id,
     };
     try {
       const response = await apiClient.post("", payload);
-      return response;
+      return true;
     } catch (e) {
       console.log(`${e}`);
     }
   }
+  return false;
 }
 
-export {obtenerCocheras, crearCochera, cambiarEstadoCochera};
+async function BorrarCochera(cochera) {
+  //Verificar que no existsa el usuario
+  if (await existeCochera(cochera.id)) {
+    try {
+      await apiClient.delete(`/${cochera.id}`);
+      return true;
+    } catch (e) {
+      console.log(`${e}`);
+    }
+  } else {
+    return false;
+  }
+}
+
+export {obtenerCocheras, crearCochera, cambiarEstadoCochera, BorrarCochera};

@@ -17,12 +17,12 @@
           </ion-item>
           <ion-button v-on:click="loguear(usuarioInput)">Login</ion-button>
         </form>
-        <div v-if="loggedIn">
+        <ion-content v-if="loggedIn">
           <ion-text>
-            <h2>H1: Sesión iniciada: {{ loggedUser.email }}.</h2>
+            <h2>Sesión iniciada: {{ loggedUser.email }}.</h2>
           </ion-text>
           <ion-button v-on:click="desloguear">Cerrar sesión</ion-button>
-        </div>
+        </ion-content>
       </ion-card>
     </div>
 
@@ -114,7 +114,6 @@ function desloguear(){
   display: flex;
   width: 1;
   justify-content: center;  
-  margin-top: 150px;
 }
 .logo{
   scale: 2;

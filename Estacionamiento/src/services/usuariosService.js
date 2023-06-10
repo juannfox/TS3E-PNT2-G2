@@ -1,98 +1,104 @@
-import axios from 'axios'
+import axios from "axios";
 
 const apiClient = axios.create({
-  baseURL: 'https://646be9b97b42c06c3b2a916c.mockapi.io/api/v1/usuarios',
+  baseURL: "https://646be9b97b42c06c3b2a916c.mockapi.io/api/v1/usuarios",
   headers: {
-  Accept: 'application/json',
-  'Content-Type': 'application/json'
-}
-})
+    Accept: "application/json",
+    "Content-Type": "application/json",
+  },
+});
 
-async function obtenerUsuarios(){
-  try{
+async function obtenerUsuarios() {
+  try {
     const response = await apiClient.get();
     return response.data;
-  } catch(e){
-    alert(`${e}`)
+  } catch (e) {
+    alert(`${e}`);
   }
 }
 
-async function obtenerUsuario(email){
-  try{
-    const usuarios = await obtenerUsuarios()
-    let usuario = usuarios.find(usr => usr.email === email);
+async function obtenerUsuario(email) {
+  try {
+    const usuarios = await obtenerUsuarios();
+    let usuario = usuarios.find((usr) => usr.email === email);
     return usuario;
-  } catch(e){
-    alert(`${e}`)
+  } catch (e) {
+    alert(`${e}`);
   }
 }
 
-async function existeUsuario(email){
-  let usuario = await obtenerUsuario(email)
-  return usuario != undefined
+async function existeUsuario(email) {
+  let usuario = await obtenerUsuario(email);
+  return usuario != undefined;
 }
 
-async function crearUsuario(usuario){
+async function crearUsuario(usuario) {
   //Verificar que no existsa el usuario
-  let usuarioYaExiste = await existeUsuario(usuario.email)
-  if (! usuarioYaExiste){
+  let usuarioYaExiste = await existeUsuario(usuario.email);
+  if (!usuarioYaExiste) {
     //Traducir los nombres de los campos
     //id y fecha son auto generados
     let payload = {
       name: usuario.nombre,
       email: usuario.email,
       password: usuario.password,
-      rol: usuario.rol
-    }
-    try{
-      const response = await apiClient.post('', payload);
+      rol: usuario.rol,
+    };
+    try {
+      const response = await apiClient.post("", payload);
       return response.status == 201;
-    } catch(e){
-      console.log(`${e}`)
+    } catch (e) {
+      console.log(`${e}`);
     }
-  }else{
-    console.log(`${usuario.email} ya existe, ignorando...`)
+  } else {
+    console.log(`${usuario.email} ya existe, ignorando...`);
   }
 }
 
-async function actualizarUsuario(usuarioActualizado){
+async function actualizarUsuario(usuarioActualizado) {
   //Verificar que existsa el usuario
-  let usuarioExistente = await obtenerUsuario(usuarioActualizado.email)
-  if (usuarioExistente != undefined){
+  let usuarioExistente = await obtenerUsuario(usuarioActualizado.email);
+  if (usuarioExistente != undefined) {
     //Traducir los nombres de los campos
     //id y fecha son auto generados
     let payload = {
       name: usuarioActualizado.nombre,
       email: usuarioActualizado.email,
       password: usuarioActualizado.password,
-      rol: usuarioActualizado.rol
-    }
-    try{
+      rol: usuarioActualizado.rol,
+    };
+    try {
       const response = await apiClient.put(`/${usuarioExistente.id}`, payload);
-      return response.status == 201
-    } catch(e){
-      console.log(`${e}`)
+      return response.status == 201;
+    } catch (e) {
+      console.log(`${e}`);
     }
-  }else{
-    console.log(`${usuarioActualizado.email} no existe, creando...`)
-    return await crearUsuario(usuarioActualizado)
+  } else {
+    console.log(`${usuarioActualizado.email} no existe, creando...`);
+    return await crearUsuario(usuarioActualizado);
   }
 }
 
-async function eliminarUsuario(email){
+async function eliminarUsuario(email) {
   //Verificar que existsa el usuario
-  let usuarioExistente = await obtenerUsuario(email)
-  if (usuarioExistente != undefined){
-    try{
+  let usuarioExistente = await obtenerUsuario(email);
+  if (usuarioExistente != undefined) {
+    try {
       const response = await apiClient.delete(`/${usuarioExistente.id}`);
-      return response.status == 201
-    } catch(e){
-      console.log(`${e}`)
+      return response.status == 201;
+    } catch (e) {
+      console.log(`${e}`);
     }
-  }else{
-    console.log(`${email} no existe, no es necesario eliminar.`)
-    return true
+  } else {
+    console.log(`${email} no existe, no es necesario eliminar.`);
+    return true;
   }
 }
 
-export {obtenerUsuario, obtenerUsuarios, crearUsuario, actualizarUsuario, eliminarUsuario}
+export {
+  obtenerUsuario,
+  obtenerUsuarios,
+  crearUsuario,
+  actualizarUsuario,
+  eliminarUsuario,
+};

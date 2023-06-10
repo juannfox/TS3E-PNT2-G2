@@ -4,29 +4,31 @@
   <ion-page v-if="loggedUser.rol === 'administrador'">
       <div class="columna">
         <h2>Usuarios</h2>
-        <div style="background-color: #454545; border-radius:5px; padding:1rem">
+        <!-- <div style="background-color: #454545; border-radius:5px; padding:1rem">
           <div class="contenedorBuscar">
             <ion-input placeholder="Ingrese email" v-model="email" style="flex:1"></ion-input>
             <ion-button @click="cargarUsuario(email)" style="flex:1; height:auto">Buscar</ion-button>
           </div>
-        </div>
-        <ion-button @click="mostrar">Mostrar todos</ion-button>
+        </div> -->
+        <ion-button @click="mostrar()">Mostrar todos</ion-button>
         <div>
           <ion-toast>{{ usuario.nombre }}</ion-toast>
         </div>
-        <div v-if="mostrarItems">
-          <ion-list v-bind:key="usuario" v-for="usuario in usuarios">
-            <ion-item>
-              <ion-label>{{ usuario.email }}</ion-label>
-            </ion-item>
-          </ion-list>
-        </div>
+        <ion-grid v-if="mostrarItems" class="grid">
+          <ion-row>  
+              <ion-col>Email</ion-col>
+              <ion-col>Rol</ion-col>
+          </ion-row>
+          <ion-row v-bind:key="usuario" v-for="usuario in usuarios">
+              <ion-col>{{ usuario.email }}</ion-col>
+              <ion-col>{{ usuario.rol }}</ion-col>
+          </ion-row>
+        </ion-grid>
       </div>
   </ion-page>
 </template>
 
 <script>
-import { ref, defineComponent } from 'vue';
 import {
   IonButton,
   IonPage,
@@ -43,11 +45,14 @@ import { storeToRefs } from 'pinia';
 import { useLoginStore } from '@/state/loginStore.js';
 
 
+
 export default {
   components: { IonPage, IonButton, IonContent, IonList, IonInput, IonToast, IonLabel, IonItem },
   methods: {
     mostrar(){
-      this.mostrarItems  = !this.mostrarItems
+      this.cargarUsuarios();
+      this.mostrarItems  = !this.mostrarItems;
+      console.log(this.mostrarItems)
     },
     async agregaraLista() {
       // Falta control de ingreso de datos
@@ -66,6 +71,7 @@ export default {
     async cargarUsuarios() {
       try {
         const respuesta = await obtenerUsuarios()
+        console.log({respuesta})
         this.usuarios = respuesta
       } catch (e) {
         alert(e)
@@ -111,6 +117,19 @@ export default {
 </script>
 
 <style>
+.grid {
+  padding: 3rem;
+  width:70%
+}
+ion-col {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  border: solid 1px #fff;
+  color: #fff;
+  flex:1
+}
 
 .contenedorBuscar{
   display:flex;
