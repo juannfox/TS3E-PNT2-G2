@@ -42,7 +42,7 @@
             fill="clear"
             color="danger"
             v-if="loggedIn"
-            v-on:click="logout"
+            v-on:click="desloguear"
             >Logout</ion-button
           >
         </div>
@@ -87,7 +87,7 @@ El import defineComponent de Vue es necesario
 para importar componentes de Vue
 https://ionicframework.com/docs/vue/troubleshooting#failed-to-resolve-component
 */
-import { ref, defineComponent } from 'vue';
+import { defineComponent } from 'vue';
 import {
   IonHeader,
   IonToolbar,
@@ -106,6 +106,8 @@ import {
 } from 'ionicons/icons';
 import { storeToRefs } from 'pinia';
 import {useLoginStore} from '@/state/loginStore.js';
+import { useRouter } from 'vue-router';
+const router = useRouter()
 
 //Instanciar store con su funcion instructiva
 const loginStore = useLoginStore();
@@ -114,7 +116,11 @@ const { loggedIn, loggedUser } = storeToRefs(loginStore);
 //Extraer metodos de forma destructurativa
 const { logout } = loginStore;
 
-const menuType = ref('overlay');
+//Cerrar sesion y ofrecer iniciar sesion
+function desloguear(){
+  logout()
+  router.push('/login')
+}
 
 </script>
 

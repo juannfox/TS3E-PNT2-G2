@@ -1,48 +1,44 @@
 <template>
   <ion-page>
-    <div class="contenedor">
-      <ion-card class="carta">
-        <h1 >
-        Login
-        </h1>
-        <ion-img class="logo" src="public/favicon.png" alt="Parkinglot.app" ></ion-img>
-        <form v-if="!loggedIn" style="display:flex ; flex-direction:column; gap:1rem; align-item:center">
-          <ion-item style="margin-top:100px">
-            <ion-text postion="floating">Email: </ion-text>
-            <ion-input type="email" v-model="usuarioInput.email" style="margin-left:10px;" required></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-text postion="floating">Contraseña: </ion-text>
-            <ion-input type="password" v-model="usuarioInput.password" style="margin-left:10px;" required></ion-input>
-          </ion-item>
-          <ion-button v-on:click="loguear(usuarioInput)">Login</ion-button>
-        </form>
-        <ion-content v-if="loggedIn">
-          <ion-text>
-            <h2>Sesión iniciada: {{ loggedUser.email }}.</h2>
-          </ion-text>
-          <ion-button v-on:click="desloguear">Cerrar sesión</ion-button>
-        </ion-content>
-      </ion-card>
-    </div>
+    <ion-content>
+      <div class="contenedor">
 
+        <ion-card class="carta">
+
+          <h1 >
+          Login
+          </h1>
+          <ion-img class="logo" src="public/favicon.png" alt="Parkinglot.app" ></ion-img>
+          <form v-if="!loggedIn" style="display:flex ; flex-direction:column; gap:1rem; align-item:center">
+            <ion-item style="margin-top:100px">
+              <ion-text postion="floating">Email: </ion-text>
+              <ion-input type="email" v-model="usuarioInput.email" style="margin-left:10px;" required></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-text postion="floating">Contraseña: </ion-text>
+              <ion-input type="password" v-model="usuarioInput.password" style="margin-left:10px;" required></ion-input>
+            </ion-item>
+            <ion-button v-on:click="loguear(usuarioInput)">Login</ion-button>
+          </form>
+        </ion-card>
+
+      </div>
+
+    </ion-content>
   </ion-page>
 </template>
 
 <script setup lang="js">
 import {
   IonContent,
-  IonHeader,
   IonButton,
-  IonPage,
   IonInput,
-  IonTitle,
-  IonToolbar,
   IonItem,
   IonText,
-  IonAlert,
   IonCard,
-  IonImg
+  IonImg,
+  IonPage,
+  IonHeader
 } from '@ionic/vue';
 import { obtenerUsuario } from '@/services/usuariosService.js';
 import { storeToRefs } from 'pinia';
@@ -57,7 +53,7 @@ const loginStore = useLoginStore();
 //Fuera (template) no hace falta.
 const { loggedIn, loggedUser } = storeToRefs(loginStore);
 //Extraer metodos de forma destructurativa
-const { login, logout, guardarUsuario } = loginStore;
+const { login, guardarUsuario } = loginStore;
 
 //Placeholder
 const usuarioInput = {email: "", password: ""};
@@ -93,12 +89,6 @@ async function loguear(usuario){
   }
 }
 
-//Cerrar sesion y ofrecer iniciar sesion
-function desloguear(){
-  logout()
-  router.push('/login')
-}
-
 </script>
 
 <style >
@@ -113,7 +103,7 @@ function desloguear(){
 .contenedor{
   display: flex;
   width: 1;
-  justify-content: center;  
+  justify-content: center;
 }
 .logo{
   scale: 2;

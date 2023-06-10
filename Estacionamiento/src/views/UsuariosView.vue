@@ -15,7 +15,7 @@
           <ion-toast>{{ usuario.nombre }}</ion-toast>
         </div>
         <ion-grid v-if="mostrarItems" class="grid">
-          <ion-row>  
+          <ion-row>
               <ion-col>Email</ion-col>
               <ion-col>Rol</ion-col>
           </ion-row>
@@ -37,7 +37,10 @@ import {
   IonInput,
   IonToast,
   IonLabel,
-  IonItem
+  IonItem,
+  IonRow,
+  IonCol,
+  IonGrid
 } from "@ionic/vue";
 import { obtenerUsuario, obtenerUsuarios } from "@/services/usuariosService";
 
@@ -47,7 +50,7 @@ import { useLoginStore } from '@/state/loginStore.js';
 
 
 export default {
-  components: { IonPage, IonButton, IonContent, IonList, IonInput, IonToast, IonLabel, IonItem },
+  components: { IonPage, IonButton, IonContent, IonList, IonInput, IonToast, IonLabel, IonItem, IonRow, IonCol, IonGrid },
   methods: {
     mostrar(){
       this.cargarUsuarios();

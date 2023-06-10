@@ -6,10 +6,13 @@ const routes = [
     path: "/",
     component: () => import("@/views/Index.vue"),
   },
-  {path: "/home", redirect: "/"},
+  { path: "/home",
+    redirect: "/"
+  },
   {
     path: "/login",
     component: () => import("@/views/LoginView.vue"),
+    meta: {RedirectHomeWhenLogged: true}
   },
   {
     path: "/mapa",
@@ -74,7 +77,12 @@ router.beforeEach((to, from) => {
           mensaje: 'Acceso denegado'
         }
       }
+    }else{
+      if (to.matched.every(r => (r.meta.RedirectHomeWhenLogged))){
+        router.push("/")
+      }
     }
+
   }
 }})
 

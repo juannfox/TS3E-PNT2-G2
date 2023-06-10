@@ -18,7 +18,7 @@
             </ion-col>
             <ion-col>
               <ion-button
-                    
+
                     @click="AgregarCochera(cocheraNueva)"
                     v-if="loggedUser.rol === 'administrador'"
                     >Agregar</ion-button
@@ -26,7 +26,7 @@
             </ion-col>
           </ion-row>
       </ion-grid>
-    
+
 
       <h2 class="titulo">Lista Cocheras</h2>
       <div v-if="cocheras.length > 0">
@@ -65,7 +65,7 @@
                     @click="handlerElminarCochera(cochera)"
                     >Eliminar</ion-button
                   >
-                  
+
                 </ion-row>
               </ion-grid>
             </ion-col>
@@ -77,7 +77,6 @@
       </div>
     </ion-content>
   </ion-page>
-
 </template>
 
 <script>
@@ -144,7 +143,7 @@ export default {
       }
     },
     async handlerElminarCochera(cochera){
-      
+
           Swal.fire({
               title: `Estas seguro que deseas borrar cochera piso : ${cochera.piso} numero : ${cochera.numero} ?`,
               showDenyButton: true,
@@ -156,16 +155,14 @@ export default {
               if (result.isConfirmed) {
                 if(BorrarCochera(cochera)){
                   Swal.fire('Se borro con exito!', '', 'success').then(() => {this.cargarCocheras()})
-                  
+
                 }else{
                   Swal.fire('Hubo un problema', '', 'info')
                 }
-              } 
+              }
             })
     },
     async AgregarCochera(cochera){
-
-      console.log(this.cocheras[0].piso, this.cocheras[0].numero)
 
       if(cochera.piso == '' || cochera.numero == ''){
          Swal.fire('No se ingresaron datos', '', 'info')
@@ -180,26 +177,21 @@ export default {
                 showCancelButton: false,
                 confirmButtonText: 'Agregar',
                 denyButtonText: `Cancelar`,
-              }).then(async (result) => {                
+              }).then(async (result) => {
                 if (result.isConfirmed) {
-                  
-                  const a = await crearCochera(cochera)
-                
-                  console.log(a)
-
-                  if( a ){
+                  if( await crearCochera(cochera) ){
                     await this.cargarCocheras().then(() => {
                       Swal.fire('Se agrego con exito!', '', 'success').then(() => {
                       this.cocheraNueva = {id: "", piso: "", numero:"",ocupada:false};})})
 
-                    
+
                   }else{
                     Swal.fire('Hubo un problema', '', 'info')
                   }
-                } 
+                }
               })
       }
-        
+
     }
   },
   data() {

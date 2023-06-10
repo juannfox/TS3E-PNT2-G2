@@ -8,11 +8,11 @@
 </template>
 
 <script setup lang="js">
-import '@/css/index.css';
-import { IonPage, IonImg } from '@ionic/vue';
+  import '@/css/index.css';
+  import { IonPage, IonImg } from '@ionic/vue';
 
-const path = window.location.pathname.split('folder/')[1];
-if (path !== undefined) {
-  selectedIndex.value = appPages.findIndex((page) => page.title.toLowerCase() === path.toLowerCase());
-}
+  const path = window.location.pathname.split('folder/')[1];
+  if (path !== undefined) {
+    selectedIndex.value = appPages.findIndex((page) => page.title.toLowerCase() === path.toLowerCase());
+  }
 </script>
