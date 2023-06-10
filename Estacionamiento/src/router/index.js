@@ -17,6 +17,7 @@ const routes = [
   {
     path: "/mapa",
     component: () => import("@/views/MapaView.vue"),
+    meta: { RequireAuth: true }
   },
   {
     path: "/mapa",
@@ -49,7 +50,8 @@ const routes = [
   {
     name: 'cocheras',
     path: '/cocheras',
-    component: () => import('@/views/CocherasView.vue')
+    component: () => import('@/views/CocherasView.vue'),
+    meta: { RequireAuth: true }
   },
   {
     name: 'sobreNosotros',
@@ -74,7 +76,7 @@ router.beforeEach((to, from) => {
       return {
         name: 'error',
         query: {
-          mensaje: 'Acceso denegado'
+          mensaje: '403: Acceso denegado'
         }
       }
     }else{

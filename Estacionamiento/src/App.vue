@@ -19,6 +19,12 @@
           </ion-button>
 
           <ion-button
+            v-if="!loggedIn"
+            v-on:click="this.$router.push('/registro')">
+            Registrarse
+          </ion-button>
+
+          <ion-button
             fill="clear"
             v-if="loggedIn"
             @click="this.$router.push('/miestacionamiento')"

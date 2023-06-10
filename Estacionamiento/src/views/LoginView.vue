@@ -4,11 +4,9 @@
       <div class="contenedor">
 
         <ion-card class="carta">
-
           <h1 >
           Login
           </h1>
-          <ion-img class="logo" src="public/favicon.png" alt="Parkinglot.app" ></ion-img>
           <form v-if="!loggedIn" style="display:flex ; flex-direction:column; gap:1rem; align-item:center">
             <ion-item style="margin-top:100px">
               <ion-text postion="floating">Email: </ion-text>
@@ -19,6 +17,31 @@
               <ion-input type="password" v-model="usuarioInput.password" style="margin-left:10px;" required></ion-input>
             </ion-item>
             <ion-button v-on:click="loguear(usuarioInput)">Login</ion-button>
+          </form>
+        </ion-card>
+
+        <ion-card class="carta">
+          <h1 >
+          Registrar
+          </h1>
+          <form v-if="!loggedIn" style="display:flex ; flex-direction:column; gap:1rem; align-item:center">
+            <ion-item >
+              <ion-text postion="floating">Nombre: </ion-text>
+              <ion-input type="text" v-model="registroInput.nombre" style="margin-left:10px;" required></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-text postion="floating">Email: </ion-text>
+              <ion-input type="email" v-model="registroInput.email" style="margin-left:10px;" required></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-text postion="floating">Contraseña: </ion-text>
+              <ion-input type="password" v-model="registroInput.password" style="margin-left:10px;" required></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-text postion="floating">Confirmar contraseña: </ion-text>
+              <ion-input type="password" v-model="registroInput.confirmPassword" style="margin-left:10px;" required></ion-input>
+            </ion-item>
+            <ion-button v-on:click="registrar(registroInput)">Registrar</ion-button>
           </form>
         </ion-card>
 
@@ -36,13 +59,12 @@ import {
   IonItem,
   IonText,
   IonCard,
-  IonImg,
-  IonPage,
-  IonHeader
+  IonPage
 } from '@ionic/vue';
-import { obtenerUsuario } from '@/services/usuariosService.js';
+import { obtenerUsuario, crearUsuario } from '@/services/usuariosService.js';
 import { storeToRefs } from 'pinia';
 import {useLoginStore} from '@/state/loginStore.js';
+import Swal from 'sweetalert2'
 import { useRouter } from 'vue-router';
 const router = useRouter()
 
@@ -57,6 +79,29 @@ const { login, guardarUsuario } = loginStore;
 
 //Placeholder
 const usuarioInput = {email: "", password: ""};
+const registroInput = {nombre: "", email: "", password: "", confirmPassword: ""};
+
+async function registrar(usuarioRegistrar){
+    try{
+      //Query al backend
+      if (usuarioRegistrar.password === usuarioRegistrar.confirmPassword){
+        let {confirmPassword: _, ...usuario} = usuarioRegistrar;
+        usuario.rol = "cliente"
+        if (await crearUsuario(usuario)){
+          usuarioRegistrar = null
+          Swal.fire("Usuario registrado", "", "success")
+        }else{
+          Swal.fire("Error al registrar", "", "error")
+        }
+      }else{
+        Swal.fire("Contraseñas no coinciden", "", "warning")
+      }
+    } catch (e){
+      Swal.fire("Error al registrar.", "", "warning")
+      console.log(`ERROR '${e.name}': ${e.message}\n${e.stack}`)
+      console.trace()
+    }
+}
 
 async function loginUsuario(solicitante){
     try{
@@ -107,6 +152,10 @@ async function loguear(usuario){
 }
 .logo{
   scale: 2;
+}
+
+.swal2-container.swal2-center.swal2-backdrop-show{
+  height: 100vh;
 }
 </style>
 
