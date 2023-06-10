@@ -101,4 +101,5 @@ export {
   crearUsuario,
   actualizarUsuario,
   eliminarUsuario,
+  existeUsuario
 };
