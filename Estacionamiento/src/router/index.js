@@ -38,8 +38,8 @@ const routes = [
     }
   },
   {
-    path: '/usuarios/perfil',
-    component: () => import('@/views/DetallesUsuarioView.vue'),
+    path: '/perfil',
+    component: () => import('@/views/PerfilView.vue'),
     meta: { RequireAuth: true }
   },
   {

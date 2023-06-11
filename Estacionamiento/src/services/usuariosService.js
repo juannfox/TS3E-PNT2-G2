@@ -55,9 +55,10 @@ async function crearUsuario(usuario) {
   }
 }
 
-async function actualizarUsuario(usuarioActualizado) {
-  //Verificar que existsa el usuario
-  let usuarioExistente = await obtenerUsuario(usuarioActualizado.email);
+async function actualizarUsuario(email, usuarioActualizado, crearSiNoExiste) {
+
+  //Verificar que exista el usuario
+  let usuarioExistente = await obtenerUsuario(email);
   if (usuarioExistente != undefined) {
     //Traducir los nombres de los campos
     //id y fecha son auto generados
@@ -73,7 +74,7 @@ async function actualizarUsuario(usuarioActualizado) {
     } catch (e) {
       console.log(`${e}`);
     }
-  } else {
+  } else if (crearSiNoExiste){
     console.log(`${usuarioActualizado.email} no existe, creando...`);
     return await crearUsuario(usuarioActualizado);
   }

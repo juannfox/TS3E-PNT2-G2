@@ -21,6 +21,13 @@
           <ion-button
             fill="clear"
             v-if="loggedIn"
+            @click="this.$router.push('/perfil')"
+            >Mi perfil</ion-button
+          >
+
+          <ion-button
+            fill="clear"
+            v-if="loggedIn"
             @click="this.$router.push('/miestacionamiento')"
             >Mi estacionamiento</ion-button
           >
