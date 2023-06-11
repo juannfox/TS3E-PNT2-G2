@@ -1,7 +1,7 @@
 
 <template>
-
   <ion-page v-if="loggedUser.rol === 'administrador'">
+    <ion-content>
       <div class="columna">
         <h2>Usuarios</h2>
         <!-- <div style="background-color: #454545; border-radius:5px; padding:1rem">
@@ -16,15 +16,22 @@
         </div>
         <ion-grid v-if="mostrarItems" class="grid">
           <ion-row>
-              <ion-col>Email</ion-col>
-              <ion-col>Rol</ion-col>
+            <ion-col>Email</ion-col>
+            <ion-col>Rol</ion-col>
+            <ion-col>Eliminar</ion-col>
           </ion-row>
           <ion-row v-bind:key="usuario" v-for="usuario in usuarios">
-              <ion-col>{{ usuario.email }}</ion-col>
-              <ion-col>{{ usuario.rol }}</ion-col>
+            <ion-col>{{ usuario.email }}</ion-col>
+            <ion-col>{{ usuario.rol }}</ion-col>
+            <ion-col>
+              <ion-button @click="handlerElminarUsuario(usuario)" color="danger">
+                Eliminar
+              </ion-button>
+            </ion-col>
           </ion-row>
         </ion-grid>
       </div>
+    </ion-content>
   </ion-page>
 </template>
 
@@ -40,21 +47,23 @@ import {
   IonItem,
   IonRow,
   IonCol,
-  IonGrid
+  IonGrid,
+  IonChip
 } from "@ionic/vue";
-import { obtenerUsuario, obtenerUsuarios } from "@/services/usuariosService";
+import { obtenerUsuario, obtenerUsuarios, eliminarUsuario } from "@/services/usuariosService";
 
 import { storeToRefs } from 'pinia';
 import { useLoginStore } from '@/state/loginStore.js';
+import Swal from 'sweetalert2';
 
 
 
 export default {
-  components: { IonPage, IonButton, IonContent, IonList, IonInput, IonToast, IonLabel, IonItem, IonRow, IonCol, IonGrid },
+  components: { IonPage, IonButton, IonContent, IonList, IonInput, IonToast, IonLabel, IonItem, IonRow, IonCol, IonGrid, IonChip },
   methods: {
-    mostrar(){
+    mostrar() {
       this.cargarUsuarios();
-      this.mostrarItems  = !this.mostrarItems;
+      this.mostrarItems = !this.mostrarItems;
       console.log(this.mostrarItems)
     },
     async agregaraLista() {
@@ -74,7 +83,7 @@ export default {
     async cargarUsuarios() {
       try {
         const respuesta = await obtenerUsuarios()
-        console.log({respuesta})
+        console.log({ respuesta })
         this.usuarios = respuesta
       } catch (e) {
         alert(e)
@@ -96,6 +105,29 @@ export default {
         this.elemento = {}
       } catch (e) {
         alert('Se produjo un error')
+      }
+    },
+    async handlerElminarUsuario(usuario) {
+      if (usuario.rol === 'administrador') {
+        Swal.fire('No se puede borrar un administrador', '', 'info')
+      } else {
+        Swal.fire({
+          title: `Estas seguro que deseas borrar usuario : ${usuario.email} ?`,
+          showDenyButton: true,
+          showCancelButton: false,
+          confirmButtonText: 'Borrar',
+          denyButtonText: `Cancelar`,
+        }).then((result) => {
+          /* Read more about isConfirmed, isDenied below */
+          if (result.isConfirmed) {
+            if (eliminarUsuario(usuario.email)) {
+              Swal.fire('Se borro con exito!', '', 'success').then(() => { this.cargarUsuarios() })
+
+            } else {
+              Swal.fire('Hubo un problema', '', 'info')
+            }
+          }
+        })
       }
     }
   },
@@ -122,8 +154,9 @@ export default {
 <style>
 .grid {
   padding: 3rem;
-  width:70%
+  width: 70%
 }
+
 ion-col {
   display: flex;
   align-items: center;
@@ -131,19 +164,24 @@ ion-col {
   text-align: center;
   border: solid 1px #fff;
   color: #fff;
-  flex:1
+  flex: 1
 }
 
-.contenedorBuscar{
-  display:flex;
+.contenedorBuscar {
+  display: flex;
   flex-direction: row;
   gap: 2rem;
 }
-.columna{
-  display:flex;
+
+.columna {
+  display: flex;
   flex-direction: column;
   align-items: center;
-  gap:2rem
+  gap: 2rem
+}
+
+.swal2-container.swal2-center.swal2-backdrop-show {
+  height: 100vh;
 }
 </style>
 

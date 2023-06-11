@@ -119,10 +119,12 @@ async function registrar(usuarioRegistrar){
       }
 
       let {confirmPassword: _, ...usuario} = usuarioRegistrar;
-      usuario.rol = "cliente"
+      usuario.rol = 'cliente'
       if (await crearUsuario(usuario)){
         usuarioRegistrar = null
         Swal.fire("Usuario registrado", "", "success")
+        loguear(usuario)
+        router.push('/')
       }else{
         throw new Error("No se pudo registrar.")
       }
