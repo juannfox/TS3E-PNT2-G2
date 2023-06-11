@@ -2,7 +2,7 @@
   <ion-page>
     <ion-content>
       <div class="container">
-        <ion-card color="light">
+        <ion-card color="light" class="carta">
           <img alt="Usuario" src="@/img/usuario.png" style="height: 128px"/>
           <ion-card-header class="card-header">
             <ion-card-title>{{ loggedUser.name }}</ion-card-title>
@@ -72,7 +72,7 @@ async function editarEmail(emailNuevo){
     const usuario = await obtenerUsuario(this.loggedUser.email)
     usuario.email = emailNuevo
     if (await actualizarUsuario(this.loggedUser.email, usuario)){
-      toggleEditarEmailButton()
+      Swal.fire('Email actualizado', '', 'success').then(() => {this.toggleEditarEmailButton()})
       this.router.push("/perfil")
     }
   } catch (error){
@@ -89,6 +89,7 @@ ion-card{
   width: 35%;
   height: 50%;
   text-align: center;
+  padding: 2rem;
 }
 
 ion-card-title{
@@ -104,6 +105,7 @@ ion-card-content{
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  width: 100%;
 }
 
 ion-item{

@@ -24,7 +24,8 @@
             <ion-col>{{ usuario.email }}</ion-col>
             <ion-col>{{ usuario.rol }}</ion-col>
             <ion-col>
-              <ion-button @click="handlerElminarUsuario(usuario)" color="danger">
+              <ion-button :disabled="usuario.rol.toLowerCase() === 'administrador'"
+              @click="handlerElminarUsuario(usuario)" color="danger">
                 Eliminar
               </ion-button>
             </ion-col>

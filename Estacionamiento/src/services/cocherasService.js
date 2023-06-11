@@ -31,7 +31,7 @@ async function obtenerCochera(piso, numero) {
 
 async function cambiarEstadoCochera(estado, cochera) {
   //Verificar que no existsa el usuario
-  if (await existeCochera(cochera.id)) {
+  if (await existeCochera(cochera.piso, cochera.numero)) {
     //Traducir los nombres de los campos
     //id y fecha son auto generados
     let payload = {
