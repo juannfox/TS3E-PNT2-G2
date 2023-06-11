@@ -27,13 +27,6 @@
 
           <ion-button
             fill="clear"
-            v-if="loggedIn"
-            @click="this.$router.push('/miestacionamiento')"
-            >Mi estacionamiento</ion-button
-          >
-
-          <ion-button
-            fill="clear"
             v-if="loggedIn && loggedUser.rol == 'administrador'"
             @click="this.$router.push('/usuarios')"
             >Listado de usuarios</ion-button

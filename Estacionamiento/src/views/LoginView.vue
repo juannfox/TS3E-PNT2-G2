@@ -187,7 +187,7 @@ async function loguear(usuario) {
 
 </script>
 
-<style >
+<style>
 .cardRegistrar{
 display: flex;
   justify-content: center;

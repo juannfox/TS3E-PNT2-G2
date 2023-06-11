@@ -55,7 +55,7 @@ async function crearUsuario(usuario) {
   }
 }
 
-async function actualizarUsuario(email, usuarioActualizado, crearSiNoExiste) {
+async function actualizarUsuario(email, usuarioActualizado) {
 
   //Verificar que exista el usuario
   let usuarioExistente = await obtenerUsuario(email);
@@ -70,13 +70,12 @@ async function actualizarUsuario(email, usuarioActualizado, crearSiNoExiste) {
     };
     try {
       const response = await apiClient.put(`/${usuarioExistente.id}`, payload);
-      return response.status == 201;
+      return response.status == 200;
     } catch (e) {
       console.log(`${e}`);
     }
-  } else if (crearSiNoExiste){
-    console.log(`${usuarioActualizado.email} no existe, creando...`);
-    return await crearUsuario(usuarioActualizado);
+  } else {
+    throw new Error("Usuario ya existe.")
   }
 }
 

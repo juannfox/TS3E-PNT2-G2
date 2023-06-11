@@ -25,11 +25,6 @@ const routes = [
     meta: {RequireAuth: true},
   },
   {
-    path: "/miestacionamiento",
-    component: () => import("@/views/DetallesEstacionamiento.vue"),
-    meta: {RequireAuth: true},
-  },
-  {
     path: '/usuarios',
     component: () => import('@/views/UsuariosView.vue'),
     meta: {

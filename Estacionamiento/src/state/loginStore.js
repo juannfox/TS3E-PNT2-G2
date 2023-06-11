@@ -19,6 +19,7 @@ const actionsObject = {
   guardarUsuario(usuario){
     let {password: _, ...usuarioRecortado} = usuario
     this.loggedUser = usuarioRecortado
+    console.log(this.loggedUser)
   }
 }
 /*Opciones de Pinia
