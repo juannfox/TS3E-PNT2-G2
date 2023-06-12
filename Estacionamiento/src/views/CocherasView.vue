@@ -1,7 +1,9 @@
 <template>
   <ion-page>
     <ion-content>
+      <ion-title color = "primary">
       <h2 class="titulo" v-if="loggedUser.rol === 'administrador'">Agregar Cochera</h2>
+    </ion-title>
         <ion-grid v-if="loggedUser.rol === 'administrador'" class="gridNuevaCochera">
           <ion-row>
             <ion-col >Piso</ion-col>
@@ -27,8 +29,9 @@
           </ion-row>
         </ion-grid>
 
-
-        <h2 class="titulo">Lista Cocheras</h2>
+        <ion-title color = "primary">
+        <h2 class="titulo" style="padding-top: 10px; padding-bottom: 0;">Lista Cocheras</h2>
+        </ion-title>
         <div v-if="cocheras.length > 0">
           <ion-grid class="grid">
             <ion-row>
@@ -93,6 +96,7 @@ import {
   IonRow,
   IonCol,
   IonChip,
+  IonTitle
 } from "@ionic/vue";
 import {
   obtenerCocheras,
@@ -118,6 +122,7 @@ export default {
     IonRow,
     IonCol,
     IonChip,
+    IonTitle
   },
   methods: {
     async cargarCocheras() {
@@ -240,8 +245,13 @@ ion-col {
   border: solid 1px #fff;
   color: #fff;
 }
-.titulo{
-  margin-left: 1rem;
+
+.titulo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  padding-bottom: 15px;
 }
 
 </style>

@@ -48,6 +48,7 @@
         </div>
       </ion-content>
     </ion-menu>
+    <ion-page id="main-content">
 
     <ion-header>
       <ion-toolbar>
@@ -67,7 +68,7 @@
       y el footer (no overlapear).
     -->
     <ion-content>
-      <ion-router-outlet id="main-content"></ion-router-outlet>
+      <ion-router-outlet></ion-router-outlet>
     </ion-content>
 
     <ion-footer>
@@ -78,6 +79,7 @@
         >Sobre Nosotros</ion-button>
       </ion-toolbar>
     </ion-footer>
+  </ion-page>
   </ion-app>
 </template>
 
@@ -100,6 +102,7 @@ import {
   IonRouterOutlet,
   IonText,
   IonIcon,
+  IonPage
 } from '@ionic/vue';
 import {
   homeOutline

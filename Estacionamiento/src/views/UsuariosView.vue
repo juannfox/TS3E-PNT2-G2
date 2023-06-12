@@ -3,7 +3,9 @@
   <ion-page v-if="loggedUser.rol === 'administrador'">
     <ion-content>
       <div class="columna">
-        <h2>Usuarios</h2>
+        <ion-title color = "primary">
+          <h2 style="color: ;">Usuarios</h2>
+        </ion-title>
           <!-- <div style="background-color: #454545; border-radius:5px; padding:1rem">
           <div class="contenedorBuscar">
             <ion-input placeholder="Ingrese email" v-model="email" style="flex:1"></ion-input>
@@ -49,7 +51,8 @@ import {
   IonRow,
   IonCol,
   IonGrid,
-  IonChip
+  IonChip,
+  IonTitle
 } from "@ionic/vue";
 import { obtenerUsuario, obtenerUsuarios, eliminarUsuario } from "@/services/usuariosService";
 
@@ -60,7 +63,7 @@ import Swal from 'sweetalert2';
 
 
 export default {
-  components: { IonPage, IonButton, IonContent, IonList, IonInput, IonToast, IonLabel, IonItem, IonRow, IonCol, IonGrid, IonChip },
+  components: { IonPage, IonButton, IonContent, IonList, IonInput, IonToast, IonLabel, IonItem, IonRow, IonCol, IonGrid, IonChip, IonTitle },
   methods: {
     mostrar() {
       this.cargarUsuarios();
