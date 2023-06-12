@@ -4,33 +4,33 @@
     <ion-content>
       <div class="columna">
         <h2>Usuarios</h2>
-        <!-- <div style="background-color: #454545; border-radius:5px; padding:1rem">
+          <!-- <div style="background-color: #454545; border-radius:5px; padding:1rem">
           <div class="contenedorBuscar">
             <ion-input placeholder="Ingrese email" v-model="email" style="flex:1"></ion-input>
             <ion-button @click="cargarUsuario(email)" style="flex:1; height:auto">Buscar</ion-button>
           </div>
         </div> -->
-        <ion-button @click="mostrar()">Mostrar todos</ion-button>
-        <div>
-          <ion-toast>{{ usuario.nombre }}</ion-toast>
-        </div>
-        <ion-grid v-if="mostrarItems" class="grid">
-          <ion-row>
-            <ion-col>Email</ion-col>
-            <ion-col>Rol</ion-col>
-            <ion-col>Eliminar</ion-col>
-          </ion-row>
-          <ion-row v-bind:key="usuario" v-for="usuario in usuarios">
-            <ion-col>{{ usuario.email }}</ion-col>
-            <ion-col>{{ usuario.rol }}</ion-col>
-            <ion-col>
-              <ion-button :disabled="usuario.rol.toLowerCase() === 'administrador'"
-              @click="handlerElminarUsuario(usuario)" color="danger">
-                Eliminar
-              </ion-button>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
+          <ion-button @click="mostrar()">Mostrar todos</ion-button>
+          <div>
+            <ion-toast>{{ usuario.nombre }}</ion-toast>
+          </div>
+          <ion-grid v-if="mostrarItems" class="grid">
+            <ion-row>
+              <ion-col>Email</ion-col>
+              <ion-col>Rol</ion-col>
+              <ion-col>Eliminar</ion-col>
+            </ion-row>
+            <ion-row v-bind:key="usuario" v-for="usuario in usuarios">
+              <ion-col>{{ usuario.email }}</ion-col>
+              <ion-col>{{ usuario.rol }}</ion-col>
+              <ion-col>
+                <ion-button :disabled="usuario.rol.toLowerCase() === 'administrador'"
+                  @click="handlerElminarUsuario(usuario)" color="danger">
+                  Eliminar
+                </ion-button>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
       </div>
     </ion-content>
   </ion-page>
@@ -60,12 +60,12 @@ import Swal from 'sweetalert2';
 
 
 export default {
-  components: { IonPage, IonButton, IonContent, IonList, IonInput, IonToast, IonLabel, IonItem, IonRow, IonCol, IonGrid, IonChip },
+  components: { IonPage, IonButton, IonContent, IonList, IonInput, IonToast, IonLabel, IonItem, IonRow, IonCol, IonGrid, IonChip, IonImg, IonCard },
   methods: {
     mostrar() {
       this.cargarUsuarios();
       this.mostrarItems = !this.mostrarItems;
-      console.log(this.mostrarItems)
+      //console.log(this.mostrarItems)
     },
     async agregaraLista() {
       // Falta control de ingreso de datos
@@ -84,7 +84,7 @@ export default {
     async cargarUsuarios() {
       try {
         const respuesta = await obtenerUsuarios()
-        console.log({ respuesta })
+        //console.log({ respuesta })
         this.usuarios = respuesta
       } catch (e) {
         alert(e)

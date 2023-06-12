@@ -77,7 +77,7 @@ async function crearCochera(cochera) {
 
 async function BorrarCochera(cochera) {
   //Verificar que no existsa el usuario
-  if (await existeCochera(cochera.id)) {
+  if (await existeCochera(cochera.piso, cochera.numero)) {
     try {
       await apiClient.delete(`/${cochera.id}`);
       return true;
