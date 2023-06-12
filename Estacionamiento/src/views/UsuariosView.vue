@@ -60,7 +60,7 @@ import Swal from 'sweetalert2';
 
 
 export default {
-  components: { IonPage, IonButton, IonContent, IonList, IonInput, IonToast, IonLabel, IonItem, IonRow, IonCol, IonGrid, IonChip, IonImg, IonCard },
+  components: { IonPage, IonButton, IonContent, IonList, IonInput, IonToast, IonLabel, IonItem, IonRow, IonCol, IonGrid, IonChip },
   methods: {
     mostrar() {
       this.cargarUsuarios();
